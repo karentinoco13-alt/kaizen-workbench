@@ -1,0 +1,54 @@
+# Kaizen Workbench
+
+**A process-improvement app for managers.** Start from what the customer needs, fund only the work that serves that need, and remove waste at every step of the process.
+
+**[Open the live app →](https://karentinoco13-alt.github.io/kaizen-workbench/)**
+
+![Hunting waste across every step of the process](docs/og-image.png)
+
+## Why I built it
+
+Waste always gets paid for somewhere: in money, in capacity, in customers, or in people who stop paying attention to detail because their work feels pointless. That includes overproduction, over-planning and over-staffing. It also includes projects with no clear goal, no deadline and no real problem to solve.
+
+Kaizen Workbench is built on one principle: **everything in an organization must add value.** People, resources and systems should work together to produce value the customer would pay for. Every project and product must be matched to a real need, funded on data, and piloted before it is scaled.
+
+## How it works
+
+The app walks a manager through eight stages. Each stage uses a proven method from process improvement, quality management or innovation.
+
+| # | Stage | Methods |
+|---|---|---|
+| 1 | **Work backwards** from the customer | Amazon's Working Backwards (PR/FAQ), voice of the customer, Six Sigma critical-to-quality (CTQ) tree |
+| 2 | **Make the case** | Project charter and a funding gate with 9 checks: customer need, measurable goal, deadline, owner, data, cost of the problem, benefit vs. cost, pilot plan. Projects with no need, goal or deadline are flagged as **zombie risk** |
+| 3 | **Map the value stream** | Toyota value stream mapping, lead time, process cycle efficiency, rolled throughput yield, and a check that **people, resources and systems** support each step |
+| 4 | **Hunt the waste** | The 8 wastes of Lean (DOWNTIME), extended to over-planning, over-staffing and disengagement, with a **"So what?"** ladder that ends in customer impact and a yearly dollar cost |
+| 5 | **Find root causes** | Toyota's **5 Whys** with a "therefore" test that reads the chain backwards, Ishikawa 6M categories, and verification with data |
+| 6 | **Design countermeasures** | ECRS (Eliminate, Combine, Rearrange, Simplify), impact vs. effort matrix, Deming's Plan-Do-Check-Act |
+| 7 | **Pilot before scaling** | Hypothesis, small scope with a comparison group, success and stop criteria set in advance, then scale, adjust or stop |
+| 8 | **Sustain the gains** | KPIs from baseline to target, standard work, control plan |
+
+A live metrics strip shows lead time, value-add time, process cycle efficiency, yield, the yearly cost of waste, verified root causes, countermeasure progress and the funding gate status.
+
+**Export A3** turns the whole project into a one-page Toyota-style A3 report in Markdown.
+
+The app opens with a fully worked example (customer refund requests) so you can see every stage in use.
+
+![Value stream map with wait time above the line and work time below](docs/screenshot-value-stream.png)
+
+![Funding gate: every project matched to a need and funded on data](docs/screenshot-funding-gate.png)
+
+## Privacy
+
+Your projects never leave your browser. There is no account, no server and no tracking. Work saves automatically in the browser's local storage on your computer. Use **Back up** to save a copy as a file and **Restore** to load it elsewhere. The **Privacy & security** button in the app explains this in full.
+
+## Tech
+
+One self-contained HTML file with plain JavaScript and CSS. No framework, no build step and no dependencies apart from Google Fonts. It works on desktop and mobile, in light and dark mode. Hosted on GitHub Pages.
+
+To run it locally, download `index.html` and open it in a browser.
+
+## Roadmap
+
+- Shared team workspace with sign-in
+- Portfolio view of every project's funding gate status and cost of waste
+- AI coach that reviews each stage and challenges weak reasoning

@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kaizen Workbench</title>
+<meta name="description" content="A process-improvement app for managers: work backwards from the customer, fund projects on data, map the value stream, cost the waste, find root causes with 5 Whys, pilot, and sustain the gains.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kaizen Workbench">
+<meta property="og:description" content="Work backwards from the customer, eliminate waste at every step, and fund only projects matched to a real need.">
+<meta property="og:image" content="https://karentinoco13-alt.github.io/kaizen-workbench/docs/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a shop-floor workbench. Sticky stage rail on the left (the improvement sequence), working surface on the right, value-stream metrics strip on top. */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --sunk:#e3e8ee; --line:#cfd6df; --ink:#16202c; --muted:#5a6676;
+  --accent:#1d5c8f; --accent-ink:#ffffff; --accent-soft:#dbe8f3;
+  --amber:#c98a00; --amber-soft:#fbefd0;
+  --va:#2f8a57; --va-soft:#d8efe1; --nnva:#c98a00; --nnva-soft:#fbefd0; --nva:#c43c33; --nva-soft:#f8dcd9;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#18202a; --sunk:#121920; --line:#2c3846; --ink:#e4e9ef; --muted:#93a0b0;
+  --accent:#6fa8d8; --accent-ink:#0c1620; --accent-soft:#1b3045;
+  --amber:#e7b23a; --amber-soft:#3a2f14;
+  --va:#5cc188; --va-soft:#173326; --nnva:#e7b23a; --nnva-soft:#3a2f14; --nva:#ef7b72; --nva-soft:#401d1b;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#18202a; --sunk:#121920; --line:#2c3846; --ink:#e4e9ef; --muted:#93a0b0;
+  --accent:#6fa8d8; --accent-ink:#0c1620; --accent-soft:#1b3045;
+  --amber:#e7b23a; --amber-soft:#3a2f14;
+  --va:#5cc188; --va-soft:#173326; --nnva:#e7b23a; --nnva-soft:#3a2f14; --nva:#ef7b72; --nva-soft:#401d1b;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1280px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:80%;text-wrap:balance;margin:0;line-height:1.1}
+h2{font-size:1.9rem;font-weight:800}
+h3{font-size:1.15rem;font-weight:700;font-stretch:88%}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* top bar */
+.top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand h1{font-size:1.5rem;font-weight:800;letter-spacing:-.01em}
+.brand .tag{font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.projbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:7px 12px;font-size:.88rem;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--nva);border-color:var(--nva)}
+.btn.small{padding:4px 9px;font-size:.8rem}
+select,input,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px;width:100%;min-width:0}
+textarea{resize:vertical;min-height:64px}
+input[type=checkbox]{width:auto}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+.projbar select{width:auto;max-width:260px}
+
+/* project header */
+.phead{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:14px}
+.phead input.pname{font-family:var(--f-display);font-stretch:80%;font-size:1.35rem;font-weight:700;background:transparent;border-color:transparent;padding:4px 6px;flex:1 1 320px}
+.phead input.pname:hover{border-color:var(--line)}
+.pill{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em;padding:3px 8px;border-radius:99px;background:var(--sunk);color:var(--muted);white-space:nowrap}
+.pill.example{background:var(--amber-soft);color:var(--amber)}
+.savestate{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+
+/* metrics strip */
+.strip{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:20px;overflow:hidden}
+.metric{padding:10px 14px;border-right:1px solid var(--line);min-width:0}
+.metric:last-child{border-right:0}
+.metric .v{font-family:var(--f-mono);font-size:clamp(1rem,1.6vw,1.25rem);font-weight:600;font-variant-numeric:tabular-nums;line-height:1.25}
+.metric .l{font-size:.75rem;color:var(--muted)}
+.metric.bad .v{color:var(--nva)} .metric.warn .v{color:var(--amber)} .metric.good .v{color:var(--va)}
+@media (max-width:900px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}.metric:nth-child(4){border-right:0}.metric:nth-child(-n+4){border-bottom:1px solid var(--line)}}
+@media (max-width:480px){.strip{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{border-right:0!important;border-bottom:1px solid var(--line)}.metric:nth-child(odd){border-right:1px solid var(--line)!important}}
+
+/* main layout */
+.main{display:grid;grid-template-columns:250px minmax(0,1fr);gap:24px;align-items:start}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;flex-direction:column;gap:2px}
+.rail button{display:grid;grid-template-columns:28px 1fr 14px;gap:10px;align-items:center;text-align:left;background:transparent;border:0;border-left:3px solid transparent;padding:9px 10px;border-radius:0 var(--r) var(--r) 0}
+.rail button:hover{background:var(--surface)}
+.rail button[aria-current="step"]{background:var(--surface);border-left-color:var(--accent)}
+.rail .n{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);font-weight:600}
+.rail .t{font-weight:600;font-size:.92rem;line-height:1.2}
+.rail .m{display:block;font-size:.72rem;color:var(--muted);font-weight:400;margin-top:2px}
+.rail .dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--line)}
+.rail .dot.done{background:var(--va);border-color:var(--va)}
+.rail .phase{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 13px 4px}
+.rail .phase:first-child{padding-top:0}
+@media (max-width:860px){
+  .main{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;flex-direction:row;overflow-x:auto;gap:4px;padding-bottom:4px}
+  .rail .phase{display:none}
+  .rail button{grid-template-columns:auto auto 10px;border-left:0;border-bottom:3px solid transparent;border-radius:var(--r) var(--r) 0 0;white-space:nowrap;flex:0 0 auto}
+  .rail button[aria-current="step"]{border-bottom-color:var(--accent)}
+  .rail .m{display:none}
+}
+
+/* stage */
+.stage{display:flex;flex-direction:column;gap:20px;min-width:0}
+.shead{display:flex;flex-direction:column;gap:6px}
+.shead .lede{max-width:68ch;color:var(--muted)}
+.method{display:flex;flex-wrap:wrap;gap:6px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel .ph{display:flex;flex-wrap:wrap;gap:8px 12px;justify-content:space-between;align-items:baseline}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:1000px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field label{font-size:.82rem;font-weight:600}
+.field .hint{font-size:.76rem;color:var(--muted);font-weight:400}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.row>.field{flex:1 1 140px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th{font-size:.72rem;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;text-align:left;padding:8px;background:var(--sunk);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td input,td select{padding:5px 7px}
+td.num input{width:84px;text-align:right;font-family:var(--f-mono)}
+.icon{border:0;background:transparent;color:var(--muted);padding:4px 6px;border-radius:4px;font-size:.95rem;line-height:1}
+.icon:hover{background:var(--sunk);color:var(--ink)}
+.empty{padding:18px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:var(--r)}
+
+/* value stream ladder */
+.vsm{overflow-x:auto;padding-bottom:4px}
+.vsm-inner{display:flex;min-width:max-content;align-items:stretch}
+.vbox{width:150px;flex:0 0 150px;display:flex;flex-direction:column}
+.vstep{margin:0 14px;border:2px solid var(--ink);border-radius:4px;padding:8px;min-height:88px;background:var(--surface);display:flex;flex-direction:column;gap:4px;position:relative}
+.vstep .nm{font-weight:600;font-size:.84rem;line-height:1.25}
+.vstep .ow{font-size:.72rem;color:var(--muted)}
+.vstep .ty{position:absolute;top:-10px;right:8px;font-family:var(--f-mono);font-size:.65rem;font-weight:600;padding:1px 6px;border-radius:3px}
+.ty.VA{background:var(--va);color:var(--surface)} .ty.NNVA{background:var(--nnva);color:var(--surface)} .ty.NVA{background:var(--nva);color:var(--surface)}
+.vstep .wz{display:flex;gap:3px;flex-wrap:wrap;margin-top:auto}
+.wz span{font-family:var(--f-mono);font-size:.62rem;font-weight:600;background:var(--nva-soft);color:var(--nva);border-radius:3px;padding:0 4px}
+.ladder{display:grid;grid-template-rows:28px 28px;margin-top:12px;font-family:var(--f-mono);font-size:.74rem;font-variant-numeric:tabular-nums}
+.ladder .w{border-top:2px solid var(--muted);border-right:2px solid var(--muted);padding:4px 6px;color:var(--nva);text-align:center}
+.ladder .c{border-bottom:2px solid var(--muted);padding:4px 6px;text-align:center;color:var(--va)}
+.ladder .w.first{border-top-color:transparent}
+.vtotal{flex:0 0 170px;margin-left:12px;border:2px solid var(--ink);border-radius:4px;padding:10px;display:flex;flex-direction:column;gap:6px;font-size:.8rem;align-self:flex-end}
+.vtotal b{font-family:var(--f-mono);font-size:.95rem}
+.timebar{display:flex;height:18px;border-radius:3px;overflow:hidden;background:var(--sunk)}
+.timebar span{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+/* waste matrix */
+.wmatrix td.c, .wmatrix th.c{text-align:center;padding:4px}
+.wcell{width:34px;height:30px;border:1px solid var(--line);border-radius:4px;background:var(--surface);font-family:var(--f-mono);font-size:.78rem;font-weight:600;color:var(--muted)}
+.hcell.ok{background:var(--va-soft);border-color:var(--va);color:var(--va)}.hcell.bad{background:var(--nva-soft);border-color:var(--nva);color:var(--nva)}
+.wcell[aria-pressed="true"]{background:var(--nva);border-color:var(--nva);color:var(--surface)}
+.wlegend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.wlegend{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.wl{border:1px solid var(--line);border-radius:var(--r);padding:8px 10px;font-size:.78rem;min-width:0}
+.wl b{font-family:var(--f-mono);color:var(--nva);margin-right:4px}
+.wl strong{display:block;font-size:.84rem}
+
+/* cards (findings, whys, actions) */
+.cards{display:flex;flex-direction:column;gap:14px}
+.card{border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:12px;background:var(--surface)}
+.card .ch{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.ladder2{display:flex;flex-direction:column;gap:0}
+.rung{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;align-items:start;padding:8px 0;border-top:1px dashed var(--line)}
+.rung:first-child{border-top:0}
+.rung .k{font-family:var(--f-mono);font-size:.74rem;font-weight:600;color:var(--accent);padding-top:8px;text-transform:uppercase;letter-spacing:.04em}
+.rung.impact .k{color:var(--nva)}
+@media (max-width:520px){.rung{grid-template-columns:minmax(0,1fr);gap:4px}.rung .k{padding-top:0}}
+.readback{background:var(--sunk);border-radius:var(--r);padding:10px 12px;font-size:.84rem;display:flex;flex-direction:column;gap:3px}
+.readback .tf{font-family:var(--f-mono);font-size:.7rem;color:var(--accent);text-transform:uppercase}
+.check{display:flex;gap:8px;align-items:center;font-size:.86rem}
+
+/* improve */
+.mx{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.mx{grid-template-columns:minmax(0,1fr)}}
+.mxsvg{width:100%;max-width:320px;height:auto}
+.mxsvg text{font-family:var(--f-mono);font-size:10px;fill:var(--muted)}
+.mxsvg .ql{font-size:10.5px;font-weight:600;fill:var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;flex-wrap:wrap}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--surface);padding:5px 10px;font-size:.78rem;font-weight:600;font-family:var(--f-mono)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.prio{font-family:var(--f-mono);font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:99px}
+.prio.qw{background:var(--va-soft);color:var(--va)} .prio.mp{background:var(--accent-soft);color:var(--accent)} .prio.fi{background:var(--sunk);color:var(--muted)} .prio.rc{background:var(--nva-soft);color:var(--nva)}
+.ecrs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;font-size:.78rem}
+@media (max-width:620px){.ecrs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ecrs div{border:1px solid var(--line);border-radius:var(--r);padding:8px 10px}
+.ecrs b{font-family:var(--f-display);font-stretch:80%;font-size:1.1rem;display:block}
+
+/* sustain */
+.prog{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden;min-width:80px}
+.prog span{display:block;height:100%;background:var(--accent)}
+
+/* coach */
+.coach{border:1px solid var(--accent);background:var(--accent-soft);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.coach .out{white-space:pre-wrap;font-size:.9rem;line-height:1.55;max-width:80ch}
+.coach .ph{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+
+.confirm{display:inline-flex;gap:6px;align-items:center;font-size:.82rem}
+/* privacy & security */
+.dlg{max-width:640px;width:calc(100% - 32px);max-height:calc(100% - 32px);overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--ink);padding:22px 24px}
+.dlg::backdrop{background:rgb(0 0 0 / .45)}
+.dlg h2{font-size:1.6rem}
+.dlg h3{margin-top:18px}
+.dlg p,.dlg li{margin-top:6px;font-size:.92rem;max-width:68ch}
+.dlg ol{padding-left:20px;margin:6px 0 0}
+.dlg .lede{font-size:1rem;color:var(--ink);margin-top:10px;padding:10px 12px;background:var(--va-soft);border-radius:var(--r)}
+.dlg form{margin-top:20px;display:flex;justify-content:flex-end}
+.dlg .now{padding:8px 12px;background:var(--accent-soft);border-radius:var(--r)}
+.coach .note{font-size:.76rem;color:var(--muted)}
+.linkbtn{border:0;background:none;padding:0;color:var(--accent);text-decoration:underline;font:inherit}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:var(--r);font-size:.86rem;z-index:20}
+@media (prefers-reduced-motion:no-preference){.stage{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><h1>Kaizen Workbench</h1><span class="tag">need → case → flow → waste → cause → countermeasure → pilot → standard</span></div>
+    <div class="projbar">
+      <label for="projSel" class="eyebrow">Project</label>
+      <select id="projSel"></select>
+      <button class="btn" data-act="newProject">+ New project</button>
+      <button class="btn" data-act="exportA3">Export A3</button>
+      <button class="btn ghost small" data-act="backup">Back up</button>
+      <button class="btn ghost small" data-act="restore">Restore</button>
+      <input type="file" id="restoreFile" accept=".json,application/json" hidden>
+      <span id="delWrap"><button class="btn ghost danger small" data-act="askDelete">Delete</button></span>
+      <button class="btn ghost small" data-act="privacy">Privacy &amp; security</button>
+    </div>
+  </header>
+
+  <div class="phead">
+    <input id="pname" class="pname" aria-label="Project name" data-path="name">
+    <span id="exampleBadge" class="pill example" hidden>Example data</span>
+    <span id="saveState" class="savestate"></span>
+  </div>
+
+  <section class="strip" id="strip" aria-label="Value stream metrics"></section>
+
+  <div class="main">
+    <nav class="rail" id="rail" aria-label="Improvement stages"></nav>
+    <main class="stage" id="stage"></main>
+  </div>
+</div>
+<div id="toast" class="toast" hidden></div>
+<dialog id="privacyDlg" class="dlg" aria-labelledby="privacyTitle">
+  <h2 id="privacyTitle" tabindex="-1" autofocus style="outline:none">Privacy and security</h2>
+  <p class="lede">Your projects never leave this browser. There is no account, no server and no tracking. Nobody else can see what you enter, including the person who made this app.</p>
+  <h3>Where your work is saved</h3>
+  <p>Everything you type saves automatically about a second after each change, in this web browser's local storage on this computer only. It does not follow you to other devices or browsers.</p>
+  <p><b>Clearing your browser data deletes your projects.</b> Private or incognito windows forget them when closed. Use <b>Back up</b> to save a copy as a file, and <b>Restore</b> to load it on another computer.</p>
+  <h3>What is sent over the internet</h3>
+  <p>Nothing you type. The page loads its fonts from Google Fonts, which, like any website, can see your IP address when the fonts load. The app is hosted on GitHub Pages, which keeps standard server logs.</p>
+  <h3>Export A3 and Back up</h3>
+  <p>The files download to your own device. They are not stored anywhere else.</p>
+  <h3>Sharing the link</h3>
+  <p>Sharing the link gives people the app, not your projects. Each person starts with the example and their own projects in their own browser.</p>
+  <h3>Deleting a project</h3>
+  <p>Delete removes the project from this browser for good. If you made a backup file, that file is not affected.</p>
+  <form method="dialog"><button class="btn primary">Close</button></form>
+</dialog>
+
+<script>
+/* ---------- reference data ---------- */
+const WASTES=[
+  {c:'D',n:'Defects',h:'Errors, rework, missing information, corrections'},
+  {c:'O',n:'Overproduction',h:'More output, plans, reports, meetings or staff than the need requires: over-producing, over-planning, over-staffing'},
+  {c:'W',n:'Waiting',h:'Queues, approvals, idle time between steps'},
+  {c:'N',n:'Non-utilized talent',h:'Unused skills and ideas, and disengagement: complacent work where people stop paying attention to detail'},
+  {c:'T',n:'Transportation',h:'Moving material or information between places or systems'},
+  {c:'I',n:'Inventory',h:'Backlogs, work in progress, piles of requests'},
+  {c:'M',n:'Motion',h:'Searching, walking, clicking, switching screens'},
+  {c:'E',n:'Extra-processing',h:'Steps, checks or polish the customer does not value, and projects with no clear goal, deadline or need'}
+];
+const COSTTYPES=['Money','Time / capacity','People & engagement','Customer','Quality risk'];
+const HARM=[{c:'P',n:'People',h:'Right skills, enough people, engaged and clear on why the step matters'},{c:'R',n:'Resources',h:'Budget, materials, space and time match what the step needs, with nothing idle or excess'},{c:'S',n:'Systems',h:'Tools and IT support the work without re-keying, workarounds or switching'}];
+const SIXM=['People','Method','Machine / systems','Material / inputs','Measurement','Environment'];
+const STAGES=[
+  {k:'customer',phase:'Define',t:'Work backwards',m:'PR/FAQ · Voice of customer · CTQ'},
+  {k:'case',phase:'Define',t:'Make the case',m:'Need match · Data · Funding gate'},
+  {k:'map',phase:'Measure',t:'Map the value stream',m:'Lean VSM · Lead time · PCE'},
+  {k:'waste',phase:'Analyze',t:'Hunt the waste',m:'8 wastes (DOWNTIME) · So what?'},
+  {k:'why',phase:'Analyze',t:'Find root causes',m:'5 Whys · Ishikawa 6M'},
+  {k:'improve',phase:'Improve',t:'Design countermeasures',m:'ECRS · Impact/effort · PDCA'},
+  {k:'pilot',phase:'Improve',t:'Pilot before scaling',m:'Hypothesis · Success criteria · Go / stop'},
+  {k:'sustain',phase:'Control',t:'Sustain the gains',m:'KPIs · Standard work · Control plan'}
+];
+const TYPES={VA:'Value-adding',NNVA:'Necessary, non-value',NVA:'Pure waste'};
+const PDCA=['Plan','Do','Check','Act','Done'];
+const ECRS={E:'Eliminate',C:'Combine',R:'Rearrange',S:'Simplify'};
+
+/* ---------- utils ---------- */
+const $=s=>document.querySelector(s);
+const uid=()=>Math.random().toString(36).slice(2,10);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num=v=>{const n=parseFloat(v);return isFinite(n)?n:0};
+function fmtMin(m){m=num(m);if(m<60)return Math.round(m)+' min';if(m<1440)return (m/60).toFixed(m<600?1:0)+' h';return (m/1440).toFixed(1)+' d'}
+function getPath(o,p){return p.split('.').reduce((a,k)=>a==null?a:a[k],o)}
+function setPath(o,p,v){const ks=p.split('.');const last=ks.pop();const t=ks.reduce((a,k)=>a[k],o);t[last]=v}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2200)}
+
+/* ---------- example + blank projects ---------- */
+function blankProject(){return{id:uid(),name:'Untitled process',updated:Date.now(),
+  customer:{who:'',problem:'',benefit:'',evidence:'',experience:'',headline:'',subhead:'',quote:'',faqs:[],ctqs:[]},
+  charter:blankCharter(),pilot:blankPilot(),steps:[],findings:[],whys:[],actions:[],kpis:[],standard:'',reaction:'',cadence:''}}
+function blankCharter(){return{kind:'',need:'',goal:'',deadline:'',sponsor:'',lead:'',team:'',evidence:'',costOfProblem:'',costBasis:'',benefit:'',budget:''}}
+function blankPilot(){return{hypothesis:'',scope:'',start:'',end:'',kill:'',criteria:[],decision:'',learnings:''}}
+function normalize(p){p.charter=Object.assign(blankCharter(),p.charter||{});p.pilot=Object.assign(blankPilot(),p.pilot||{});(p.steps||[]).forEach(st=>{if(!st.harmony)st.harmony={P:'',R:'',S:''}});(p.findings||[]).forEach(f=>{if(f.cost==null)f.cost='';if(!f.costType)f.costType='Money'});return p}
+function exampleProject(){const s=[uid(),uid(),uid(),uid(),uid(),uid()];const w1=uid(),w2=uid();return{
+  id:uid(),example:true,name:'Customer refund requests',updated:Date.now(),
+  customer:{who:'Online shoppers who returned an item and want their money back.',
+    problem:'Refunds take 4.2 days on average. Customers do not know where their refund is, so they call to chase it.',
+    benefit:'Money back within 24 hours, with a message at every status change.',
+    evidence:'Post-return survey (n=612): 71% rate speed as the top driver of satisfaction. 30% of service calls are "where is my refund?".',
+    experience:'Customer drops the parcel at the carrier, gets a confirmation within the hour, and sees the refund the next day without contacting us.',
+    headline:'Refunds now land within 24 hours, and you will know the moment they are sent',
+    subhead:'Returning an item no longer means waiting and wondering.',
+    quote:'"I dropped the box off on Monday and had my money on Tuesday. I never had to call." (target customer quote)',
+    faqs:[{q:'Do refunds over $250 still need a check?',a:'Yes. Higher-value refunds get a same-day audit sample instead of a pre-approval queue.'},
+          {q:'What if the order number is missing?',a:'The form fills it from the customer account, so it can no longer be missing.'}],
+    ctqs:[{need:'Get my money back fast',driver:'Speed',metric:'Hours from request to refund issued',target:'≤ 24 h'},
+          {need:'Know what is happening',driver:'Transparency',metric:'% of status changes notified automatically',target:'100%'},
+          {need:'Get the right amount',driver:'Accuracy',metric:'% refunds correct first time',target:'≥ 99%'}]},
+  charter:{kind:'Fix a problem',need:'Get my money back fast',goal:'Cut refund lead time from 4.2 days to 1 day and refund-status calls from 340 to 50 a week',deadline:'2027-01-31',
+    sponsor:'VP Customer Operations',lead:'Head of Service',team:'2 service agents, 1 supervisor, 1 finance analyst, 1 digital product owner',
+    evidence:'12 weeks of refund timestamps (n=9,840), call reason codes, post-return survey (n=612), 2 days of gemba observation.',
+    costOfProblem:412000,costBasis:'Status calls 340/wk × $6.50 × 52 = $115k. Supervisor approval time 6 h/wk × $100 × 52 = $31k. Lost repeat purchases from 2% of returning customers ≈ $266k.',
+    benefit:290000,budget:45000},
+  pilot:{hypothesis:'If agents issue refunds up to $250 on first touch with a weekly 5% audit, then refund lead time will fall from 4.2 to under 1.5 days with no rise in fraud, because the approval queue is the largest single wait.',
+    scope:'Team B (8 agents), refunds under $250, all channels. Team A keeps the current process as the comparison.',start:'2026-11-02',end:'2026-11-27',
+    kill:'Stop at once if audited fraud exceptions exceed 1% of refunds.',
+    criteria:[{id:uid(),metric:'Refund lead time (days)',baseline:'4.2',threshold:'≤ 1.5',result:'1.3'},{id:uid(),metric:'Audit exceptions',baseline:'n/a',threshold:'≤ 0.5%',result:'0.2%'},{id:uid(),metric:'Refund CSAT (1–5)',baseline:'3.6',threshold:'≥ 4.2',result:'4.1'}],
+    decision:'Adjust',learnings:'Lead time target met. CSAT just short because customers still did not get a confirmation email. Re-pilot together with automatic confirmation (countermeasure #3).'},
+  steps:[
+    {id:s[0],name:'Customer submits refund form',owner:'Customer',type:'VA',ct:5,wait:0,defects:18,wastes:['D','E'],harmony:{P:'ok',R:'ok',S:'bad'}},
+    {id:s[1],name:'Request sits in shared inbox',owner:'Service team',type:'NVA',ct:0,wait:1440,defects:0,wastes:['W','I'],harmony:{P:'bad',R:'bad',S:'bad'}},
+    {id:s[2],name:'Agent checks order in ERP and CRM',owner:'Service agent',type:'NNVA',ct:12,wait:0,defects:4,wastes:['M','T','E'],harmony:{P:'ok',R:'ok',S:'bad'}},
+    {id:s[3],name:'Supervisor approval (over $50)',owner:'Supervisor',type:'NVA',ct:3,wait:2880,defects:0,wastes:['W','E','N'],harmony:{P:'bad',R:'bad',S:'ok'}},
+    {id:s[4],name:'Finance issues refund',owner:'Finance',type:'VA',ct:6,wait:1440,defects:2,wastes:['W','I','T'],harmony:{P:'ok',R:'ok',S:'ok'}},
+    {id:s[5],name:'Agent emails confirmation',owner:'Service agent',type:'NNVA',ct:4,wait:240,defects:0,wastes:['M','E'],harmony:{P:'bad',R:'ok',S:'bad'}}],
+  findings:[
+    {id:uid(),stepId:s[3],waste:'W',obs:'64% of approvals are under $120, and 100% of them are approved.',
+     so1:'Agents wait two days for a decision that is always yes.',so2:'Supervisors spend about 6 hours a week on approvals that change nothing.',impact:'Customers wait 2 extra days and call to chase. Refund-status calls are 30% of call volume.',cost:146000,costType:'Customer'},
+    {id:uid(),stepId:s[0],waste:'D',obs:'18% of forms arrive without an order number.',
+     so1:'Agents email the customer and the request goes back into the queue.',so2:'Each incomplete form adds about 1.5 days.',impact:'The customers we already made wait are the ones we ask to do extra work.',cost:38000,costType:'Time / capacity'}],
+  whys:[
+    {id:w1,problem:'Refunds take 4.2 days on average against a customer expectation of 24 hours.',
+     whys:['Most of the time is spent waiting for supervisor approval.','Every refund over $50 needs approval.','The policy requires approval to prevent refund fraud.','The $50 threshold was set in 2014 when average order value was $38.','Nobody owns the refund policy, so it has never been reviewed.'],
+     root:'The approval threshold has no owner and no review cycle, so it no longer matches order values or fraud risk.',cat:'Method',verified:true},
+    {id:w2,problem:'18% of refund forms arrive without an order number.',
+     whys:['The order number field is optional.','The form was built before customers had accounts.',''],
+     root:'',cat:'Material / inputs',verified:false}],
+  actions:[
+    {id:uid(),title:'Raise approval threshold to $250 and replace pre-approval with a weekly 5% audit',ecrs:'E',why:w1,impact:5,effort:1,owner:'Head of Service',due:'2026-11-07',status:'Do'},
+    {id:uid(),title:'Make order number required and fill it from the customer account',ecrs:'S',why:w2,impact:4,effort:2,owner:'Digital team',due:'2026-11-21',status:'Plan'},
+    {id:uid(),title:'Send confirmation automatically from the refund system',ecrs:'E',why:'',impact:3,effort:2,owner:'Finance systems',due:'2026-12-05',status:'Plan'},
+    {id:uid(),title:'Single lookup screen that combines ERP and CRM order data',ecrs:'C',why:'',impact:3,effort:4,owner:'IT',due:'2027-02-01',status:'Plan'}],
+  kpis:[
+    {id:uid(),name:'Refund lead time',unit:'days',baseline:4.2,target:1,current:2.6},
+    {id:uid(),name:'Forms missing order number',unit:'%',baseline:18,target:2,current:11},
+    {id:uid(),name:'Refund-status calls per week',unit:'calls',baseline:340,target:50,current:210}],
+  standard:'1. Refunds up to $250 are issued by the agent on first touch.\n2. Every Monday the team lead audits a 5% random sample and logs exceptions.\n3. Order number is pulled from the account; manual entry only for guest checkouts.',
+  reaction:'If lead time goes above 1.5 days for two weeks in a row, the process owner runs a 5 Whys within 3 working days and reports at the weekly huddle.',
+  cadence:'Weekly huddle (15 min, Monday). Monthly review with Finance. Policy owner: Head of Service.'}}
+
+/* ---------- state + storage ---------- */
+let projects={}; let cur=null; let stage='customer';
+let dbRef=null, userId=null, sampleFn=null, downloadsCap=null;
+const LS='kaizen-workbench-v1';
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify({projects,cur:cur&&cur.id,stage}))}catch(e){}}
+function lsLoad(){try{const d=JSON.parse(localStorage.getItem(LS)||'null');if(d&&d.projects){projects=d.projects;Object.values(projects).forEach(normalize);cur=projects[d.cur]||Object.values(projects)[0]||null;stage=d.stage||stage}}catch(e){}}
+let saveTimer=null, dirty=new Set();
+function touched(){if(!cur)return;cur.updated=Date.now();dirty.add(cur.id);lsSave();setSave('Saving…');clearTimeout(saveTimer);saveTimer=setTimeout(flush,1200)}
+async function flush(){
+  const ids=[...dirty];dirty.clear();
+  if(!dbRef){setSave('Saved in this browser');return}
+  try{for(const id of ids){const p=projects[id];if(!p)continue;await dbRef.collection('data/users/'+userId).doc(id).set({name:p.name,updated:p.updated,json:JSON.stringify(p)})}
+    setSave('Saved to your account')}
+  catch(e){setSave('Could not save to your account. Kept in this browser.')}
+}
+function setSave(t){$('#saveState').textContent=t}
+async function initCaps(){setSave(cur&&cur.example?'Example project. Edit anything, or start a new project.':'Saved in this browser')}
+
+/* ---------- derived metrics ---------- */
+function metrics(p){
+  const st=p.steps||[];
+  const ct=st.reduce((a,s)=>a+num(s.ct),0), wait=st.reduce((a,s)=>a+num(s.wait),0), lead=ct+wait;
+  const va=st.filter(s=>s.type==='VA').reduce((a,s)=>a+num(s.ct),0);
+  const nnva=st.filter(s=>s.type==='NNVA').reduce((a,s)=>a+num(s.ct),0);
+  const nva=st.filter(s=>s.type==='NVA').reduce((a,s)=>a+num(s.ct),0);
+  const pce=lead?va/lead*100:0;
+  const rty=st.reduce((a,s)=>a*(1-Math.min(100,num(s.defects))/100),1)*100;
+  const hits=st.reduce((a,s)=>a+(s.wastes||[]).length,0);
+  const roots=(p.whys||[]).filter(w=>w.root&&w.root.trim());
+  const verified=roots.filter(w=>w.verified).length;
+  const acts=p.actions||[]; const done=acts.filter(a=>a.status==='Done'||a.status==='Act').length;
+  const wasteCost=(p.findings||[]).reduce((a,f)=>a+num(f.cost),0);
+  return{wasteCost,ct,wait,lead,va,nnva,nva,pce,rty,hits,roots:roots.length,verified,acts:acts.length,done,n:st.length}
+}
+function money(v){v=num(v);return v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+Math.round(v/1e3)+'k':'$'+Math.round(v)}
+function harmony(p){let ok=0,bad=0;(p.steps||[]).forEach(st=>HARM.forEach(h=>{const v=(st.harmony||{})[h.c];if(v==='ok')ok++;if(v==='bad')bad++}));return{ok,bad,rated:ok+bad,pct:ok+bad?ok/(ok+bad)*100:0}}
+function gate(p){const c=p.charter,pl=p.pilot;const innov=c.kind==='Create something new';return[
+  ['Matched to a real customer need',!!(c.need&&c.need.trim())],
+  ['Clear purpose: fix a problem or create something new',!!c.kind],
+  ['Measurable goal (has a number)',/\d/.test(c.goal||'')],
+  ['Fixed deadline',!!c.deadline],
+  ['Accountable sponsor and lead',!!(c.sponsor&&c.lead)],
+  ['Backed by data, not opinion',!!(c.evidence&&c.evidence.trim().length>20)],
+  [innov?'Size of the opportunity quantified':'Cost of the problem quantified',num(c.costOfProblem)>0],
+  ['Expected benefit exceeds the cost to fund',num(c.benefit)>0&&num(c.budget)>0&&num(c.benefit)>num(c.budget)],
+  ['Pilot planned before full rollout',!!(pl.hypothesis&&pl.criteria.length&&pl.end)]]}
+function gateState(p){const g=gate(p);const miss=g.filter(x=>!x[1]).length;const zombie=!p.charter.deadline||!/\d/.test(p.charter.goal||'')||!p.charter.need;
+  return{miss,ok:miss===0,zombie,label:miss===0?'Ready to fund':zombie?'Zombie risk':miss+' gaps'}}
+function stageDone(p,k){const c=p.customer;switch(k){
+  case'customer':return!!(c.who&&c.benefit&&c.headline&&c.ctqs.some(x=>x.metric));
+  case'case':return gateState(p).ok;
+  case'pilot':return!!(p.pilot.decision&&p.pilot.criteria.some(c=>c.result));
+  case'map':return p.steps.length>=3&&p.steps.every(s=>s.name);
+  case'waste':return p.findings.some(f=>f.impact);
+  case'why':return p.whys.some(w=>w.root&&w.verified);
+  case'improve':return p.actions.length>0&&p.actions.some(a=>a.owner);
+  case'sustain':return p.kpis.some(k=>k.current!==''&&k.current!=null)&&!!p.standard}}
+
+/* ---------- render: chrome ---------- */
+function renderAll(){renderProjects();renderHead();renderStrip();renderRail();renderStage()}
+function renderProjects(){
+  const list=Object.values(projects).sort((a,b)=>b.updated-a.updated);
+  $('#projSel').innerHTML=list.map(p=>`<option value="${esc(p.id)}"${cur&&p.id===cur.id?' selected':''}>${esc(p.name||'Untitled')}${p.example?' (example)':''}</option>`).join('');
+  $('#delWrap').innerHTML='<button class="btn ghost danger small" data-act="askDelete">Delete</button>';
+}
+function renderHead(){$('#pname').value=cur.name;$('#exampleBadge').hidden=!cur.example}
+function renderStrip(){
+  const m=metrics(cur),gs=gateState(cur);
+  const cls=(v,g,w)=>v>=g?'good':v>=w?'warn':'bad';
+  const cells=[
+    ['Lead time',m.n?fmtMin(m.lead):'—',''],
+    ['Value-add time',m.n?fmtMin(m.va):'—',''],
+    ['Process cycle efficiency',m.n?m.pce.toFixed(m.pce<1?2:1)+'%':'—',m.n?cls(m.pce,25,5):''],
+    ['Rolled throughput yield',m.n?m.rty.toFixed(0)+'%':'—',m.n?cls(m.rty,95,80):''],
+    ['Cost of waste / year',m.wasteCost?money(m.wasteCost):'—',m.wasteCost?'bad':''],
+    ['Root causes verified',m.verified+' / '+m.roots,''],
+    ['Countermeasures in Act/Done',m.done+' / '+m.acts,''],
+    ['Funding gate',gs.label,gs.ok?'good':gs.zombie?'bad':'warn']];
+  $('#strip').innerHTML=cells.map(([l,v,c])=>`<div class="metric ${c}"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+}
+function renderRail(){
+  let last='';
+  $('#rail').innerHTML=STAGES.map((s,i)=>{const ph=s.phase!==last?`<div class="phase">${s.phase}</div>`:'';last=s.phase;
+    return ph+`<button data-act="go" data-k="${s.k}" ${stage===s.k?'aria-current="step"':''}><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${s.t}<span class="m">${s.m}</span></span><span class="dot ${stageDone(cur,s.k)?'done':''}" title="${stageDone(cur,s.k)?'Complete':'In progress'}"></span></button>`}).join('');
+}
+
+/* ---------- field helpers ---------- */
+function fid(p){return'f-'+p.replace(/\./g,'-')}
+function input(path,{label='',hint='',type='text',ph='',rows=0,cls=''}={}){
+  const v=getPath(cur,path)??'';const id=fid(path);
+  const ctl=rows?`<textarea id="${id}" data-path="${path}" rows="${rows}" placeholder="${esc(ph)}">${esc(v)}</textarea>`
+    :`<input id="${id}" data-path="${path}" ${type==='number'?'type="number" step="any" data-num="1"':'type="'+type+'"'} value="${esc(v)}" placeholder="${esc(ph)}">`;
+  return label?`<div class="field ${cls}"><label for="${id}">${esc(label)}${hint?` <span class="hint">${esc(hint)}</span>`:''}</label>${ctl}</div>`:ctl;
+}
+function sel(path,opts,label){const v=getPath(cur,path)??'';const id=fid(path);
+  const s=`<select id="${id}" data-path="${path}" data-rerender="1">${opts.map(([k,n])=>`<option value="${esc(k)}"${String(k)===String(v)?' selected':''}>${esc(n)}</option>`).join('')}</select>`;
+  return label?`<div class="field"><label for="${id}">${esc(label)}</label>${s}</div>`:s}
+function stageHead(k,lede,methods){const i=STAGES.findIndex(x=>x.k===k),s=STAGES[i];
+  return`<div class="shead"><div class="eyebrow">Stage ${i+1} of ${STAGES.length} · ${s.phase}</div><h2>${s.t}</h2><p class="lede">${lede}</p><div class="method">${methods.map(m=>`<span class="pill">${esc(m)}</span>`).join('')}</div></div>`}
+function coachBox(){
+  if(!sampleFn)return'';
+  return`<div class="coach" id="coach"><div class="ph"><div><h3>Ask the coach</h3><p class="muted" style="font-size:.84rem">A lean six sigma coach reviews this stage and challenges weak spots.</p><p class="note">Clicking sends this project's contents to Claude. The answer is shown here and not saved. <button class="linkbtn" data-act="privacy">Privacy &amp; security</button></p></div><button class="btn primary" data-act="coach">Review this stage</button></div><div class="out" id="coachOut" hidden></div></div>`}
+
+/* ---------- stages ---------- */
+function rCustomer(){const c='customer';
+  return stageHead('customer','Start from the customer and work backwards to the process. If you cannot write the press release a customer would care about, you are not ready to change the process.',['Amazon Working Backwards','PR/FAQ','Voice of the customer','CTQ tree (Six Sigma)'])+
+  `<div class="grid2">
+   <section class="panel"><div class="ph"><h3>The five customer questions</h3></div>
+    ${input(c+'.who',{label:'Who is the customer?',hint:'Be specific: a person, not a department',rows:2})}
+    ${input(c+'.problem',{label:'What is their problem or unmet need?',rows:2})}
+    ${input(c+'.benefit',{label:'What is the most important benefit to them?',rows:2})}
+    ${input(c+'.evidence',{label:'How do you know?',hint:'Data, interviews, complaints',rows:2})}
+    ${input(c+'.experience',{label:'What does the ideal experience look like?',rows:2})}
+   </section>
+   <section class="panel"><div class="ph"><h3>Future press release</h3><span class="eyebrow">written as if already done</span></div>
+    ${input(c+'.headline',{label:'Headline',ph:'What the customer gets, in their words'})}
+    ${input(c+'.subhead',{label:'Sub-heading',ph:'Who it is for and why it matters'})}
+    ${input(c+'.quote',{label:'Customer quote',rows:2})}
+    <div class="field"><label>FAQ <span class="hint">The hard questions a skeptic would ask</span></label>
+     <div class="cards">${cur.customer.faqs.map((f,i)=>`<div class="row">${input(`${c}.faqs.${i}.q`,{label:'Q'+(i+1),cls:''})}${input(`${c}.faqs.${i}.a`,{label:'Answer'})}<button class="icon" data-act="del" data-list="customer.faqs" data-i="${i}" aria-label="Remove question">✕</button></div>`).join('')}</div>
+     <div><button class="btn small" data-act="add" data-list="customer.faqs">+ Add question</button></div></div>
+   </section></div>
+  <section class="panel"><div class="ph"><h3>Critical-to-quality tree</h3><span class="muted" style="font-size:.84rem">Turn each need into a measurable requirement. These become your KPIs in the last stage.</span></div>
+   <div class="tbl"><table><thead><tr><th>Customer need (their words)</th><th>Quality driver</th><th>Measurable CTQ</th><th>Target</th><th></th></tr></thead><tbody>
+   ${cur.customer.ctqs.map((q,i)=>`<tr><td>${input(`${c}.ctqs.${i}.need`)}</td><td>${input(`${c}.ctqs.${i}.driver`)}</td><td>${input(`${c}.ctqs.${i}.metric`)}</td><td>${input(`${c}.ctqs.${i}.target`)}</td><td><button class="icon" data-act="del" data-list="customer.ctqs" data-i="${i}" aria-label="Remove row">✕</button></td></tr>`).join('')||'<tr><td colspan="5" class="muted">No CTQs yet.</td></tr>'}
+   </tbody></table></div><div><button class="btn small" data-act="add" data-list="customer.ctqs">+ Add CTQ</button></div></section>`+coachBox()}
+
+function vsmHTML(){const st=cur.steps;if(!st.length)return'<div class="empty">Add process steps below to draw the value stream.</div>';
+  const m=metrics(cur);const L=m.lead||1;
+  const bar=`<div class="field"><label>Where the lead time goes</label><div class="timebar">
+   <span style="width:${m.va/L*100}%;background:var(--va)" title="Value-adding"></span><span style="width:${m.nnva/L*100}%;background:var(--nnva)" title="Necessary non-value"></span><span style="width:${m.nva/L*100}%;background:var(--nva)" title="Pure waste work"></span><span style="width:${m.wait/L*100}%;background:repeating-linear-gradient(45deg,var(--nva-soft) 0 5px,var(--sunk) 5px 10px)" title="Waiting"></span></div>
+   <div class="legend"><span><i style="background:var(--va)"></i>Value-adding ${fmtMin(m.va)}</span><span><i style="background:var(--nnva)"></i>Necessary non-value ${fmtMin(m.nnva)}</span><span><i style="background:var(--nva)"></i>Waste work ${fmtMin(m.nva)}</span><span><i style="background:var(--nva-soft);outline:1px solid var(--nva)"></i>Waiting ${fmtMin(m.wait)} (${(m.wait/L*100).toFixed(0)}% of lead time)</span></div></div>`;
+  return`<div class="vsm"><div class="vsm-inner">${st.map((s,i)=>`<div class="vbox"><div class="vstep"><span class="ty ${s.type}">${s.type}</span><span class="nm">${esc(s.name||'Step '+(i+1))}</span><span class="ow">${esc(s.owner)}</span>${num(s.defects)?`<span class="ow mono">${num(s.defects)}% defects</span>`:''}<span class="wz">${(s.wastes||[]).map(w=>`<span>${w}</span>`).join('')}</span></div>
+    <div class="ladder"><div class="w ${i===0&&!num(s.wait)?'first':''}">${num(s.wait)?'⏳ '+fmtMin(s.wait):''}</div><div class="c">${fmtMin(s.ct)}</div></div></div>`).join('')}
+    <div class="vtotal"><span>Lead time<br><b>${fmtMin(m.lead)}</b></span><span>Value-add time<br><b>${fmtMin(m.va)}</b></span><span>PCE<br><b>${m.pce.toFixed(m.pce<1?2:1)}%</b></span></div></div></div>`+bar}
+function rMap(){
+  return stageHead('map','Walk the process where the work happens (gemba) and record each step as it is, not as the procedure says. Every step, and the people, resources and systems behind it, should add value the customer would pay for. Waiting between steps is usually where most of the lead time hides.',['Toyota Value Stream Mapping','People · resources · systems alignment','Lead time / cycle time','Process cycle efficiency','Rolled throughput yield'])+
+  `<section class="panel"><div class="ph"><h3>Current-state value stream</h3><span class="muted" style="font-size:.84rem">Wait time sits above the line, work time below.</span></div><div id="vsm">${vsmHTML()}</div></section>
+  <section class="panel"><div class="ph"><h3>Process steps</h3><span class="muted" style="font-size:.84rem">Times in minutes (1 day = 1440). Classify each step from the customer's point of view: would they pay for it?</span></div>
+   <div class="tbl"><table><thead><tr><th>#</th><th>Step</th><th>Owner</th><th>Value type</th><th>Wait before</th><th>Work time</th><th>Defect %</th><th></th></tr></thead><tbody>
+   ${cur.steps.map((s,i)=>`<tr><td class="mono">${i+1}</td><td style="min-width:200px">${input(`steps.${i}.name`)}</td><td style="min-width:120px">${input(`steps.${i}.owner`)}</td><td>${sel(`steps.${i}.type`,Object.entries(TYPES))}</td><td class="num">${input(`steps.${i}.wait`,{type:'number'})}</td><td class="num">${input(`steps.${i}.ct`,{type:'number'})}</td><td class="num">${input(`steps.${i}.defects`,{type:'number'})}</td>
+     <td style="white-space:nowrap"><button class="icon" data-act="move" data-i="${i}" data-d="-1" aria-label="Move up">↑</button><button class="icon" data-act="move" data-i="${i}" data-d="1" aria-label="Move down">↓</button><button class="icon" data-act="del" data-list="steps" data-i="${i}" aria-label="Remove step">✕</button></td></tr>`).join('')||'<tr><td colspan="8" class="muted">No steps yet.</td></tr>'}
+   </tbody></table></div><div><button class="btn small" data-act="add" data-list="steps">+ Add step</button></div>
+   <div class="legend" style="margin-top:2px"><span><b>VA</b> changes the product or service in a way the customer wants and is done right first time</span><span><b>NNVA</b> required by law, policy or today's technology</span><span><b>NVA</b> pure waste: eliminate</span></div></section>
+  <section class="panel" id="harmonyPanel">${harmonyHTML()}</section>`+coachBox()}
+function harmonyHTML(){const st=cur.steps,h=harmony(cur);
+  const lab={ok:'✓',bad:'✕','':'?'},nxt={'':'ok',ok:'bad',bad:''};
+  return`<div class="ph"><h3>People, resources and systems in harmony</h3><span class="prio ${!h.rated?'fi':h.pct>=80?'qw':h.pct>=50?'mp':'rc'}">${h.rated?h.pct.toFixed(0)+'% aligned':'Not rated'}</span></div>
+   <p class="muted" style="font-size:.86rem;max-width:72ch">Everything in the organization should add value. For each step, are the people, the resources and the systems working together to deliver it? Tap to cycle: ✓ supports the value, ✕ creates friction or excess, ? not checked.</p>
+   ${st.length?`<div class="tbl"><table class="wmatrix"><thead><tr><th>Step</th>${HARM.map(x=>`<th class="c" title="${esc(x.h)}">${x.n}</th>`).join('')}</tr></thead><tbody>
+   ${st.map((s,i)=>`<tr><td style="min-width:180px"><span class="mono muted">${i+1}</span> ${esc(s.name)}</td>${HARM.map(x=>{const v=(s.harmony||{})[x.c]||'';return`<td class="c"><button class="wcell hcell ${v}" data-act="harm" data-i="${i}" data-h="${x.c}" data-next="${nxt[v]}" aria-label="${esc(x.n)} at ${esc(s.name)}: ${v==='ok'?'supports value':v==='bad'?'friction':'not checked'}">${lab[v]}</button></td>`}).join('')}</tr>`).join('')}</tbody></table></div>`:'<div class="empty">Add process steps to rate them.</div>'}
+   <div class="wlegend" style="grid-template-columns:repeat(3,minmax(0,1fr))">${HARM.map(x=>`<div class="wl"><strong><b>${x.c}</b>${x.n}</strong>${x.h}</div>`).join('')}</div>`}
+
+function rWaste(){const st=cur.steps;
+  const colTot=WASTES.map(w=>st.filter(s=>(s.wastes||[]).includes(w.c)).length);
+  return stageHead('waste','Look at every step for the eight wastes. Waste always gets paid for somewhere: in money, in capacity, in customers, or in people who stop paying attention because the work feels pointless. For each sighting, keep asking "So what?" until you reach that cost, then put a number on it.',['Lean 8 wastes (DOWNTIME)','Taiichi Ohno\'s muda','"So what?" ladder'])+
+  `<section class="panel"><div class="ph"><h3>Waste walk matrix</h3><span class="muted" style="font-size:.84rem">Tap a cell to mark a waste you observed at that step.</span></div>
+   ${st.length?`<div class="tbl"><table class="wmatrix"><thead><tr><th>Step</th>${WASTES.map(w=>`<th class="c" title="${esc(w.n)}">${w.c}</th>`).join('')}<th class="c">Σ</th></tr></thead><tbody>
+   ${st.map((s,i)=>`<tr><td style="min-width:180px"><span class="mono muted">${i+1}</span> ${esc(s.name)}</td>${WASTES.map(w=>`<td class="c"><button class="wcell" data-act="toggleWaste" data-i="${i}" data-w="${w.c}" aria-pressed="${(s.wastes||[]).includes(w.c)}" aria-label="${esc(w.n)} at ${esc(s.name)}">${w.c}</button></td>`).join('')}<td class="c mono">${(s.wastes||[]).length}</td></tr>`).join('')}
+   <tr><td class="muted">Total</td>${colTot.map(t=>`<td class="c mono">${t}</td>`).join('')}<td class="c mono">${colTot.reduce((a,b)=>a+b,0)}</td></tr></tbody></table></div>`:'<div class="empty">Map your process steps first (Map the value stream).</div>'}
+   <div class="wlegend">${WASTES.map(w=>`<div class="wl"><strong><b>${w.c}</b>${w.n}</strong>${w.h}</div>`).join('')}</div></section>
+  <section class="panel"><div class="ph"><h3>Findings and the "So what?" ladder</h3><button class="btn small" data-act="add" data-list="findings">+ Add finding</button></div>
+   <div class="cards">${cur.findings.map((f,i)=>`<div class="card"><div class="ch"><div class="row" style="flex:1">${sel(`findings.${i}.stepId`,[['','Choose step…'],...st.map((s,j)=>[s.id,(j+1)+'. '+s.name])],'Step')}${sel(`findings.${i}.waste`,[['','Choose waste…'],...WASTES.map(w=>[w.c,w.c+' · '+w.n])],'Waste')}</div>
+     <div class="row"><button class="btn small" data-act="toWhy" data-i="${i}">Send to 5 Whys →</button><button class="icon" data-act="del" data-list="findings" data-i="${i}" aria-label="Remove finding">✕</button></div></div>
+     <div class="ladder2"><div class="rung"><span class="k">We saw</span>${input(`findings.${i}.obs`,{rows:2,ph:'Fact, with numbers if possible'})}</div>
+     <div class="rung"><span class="k">So what?</span>${input(`findings.${i}.so1`,{rows:2,ph:'What does that cause?'})}</div>
+     <div class="rung"><span class="k">So what?</span>${input(`findings.${i}.so2`,{rows:2,ph:'And what does that cause?'})}</div>
+     <div class="rung impact"><span class="k">Customer impact</span>${input(`findings.${i}.impact`,{rows:2,ph:'What the customer feels, or what it costs the business'})}</div>
+     <div class="rung impact"><span class="k">What it costs</span><div class="row">${input(`findings.${i}.cost`,{label:'Estimated cost per year ($)',type:'number'})}${sel(`findings.${i}.costType`,COSTTYPES.map(x=>[x,x]),'Mainly paid in')}</div></div></div></div>`).join('')||'<div class="empty">No findings yet. Add one for each waste worth acting on.</div>'}</div></section>`+coachBox()}
+
+function rWhy(){
+  return stageHead('why','Ask "Why?" until you reach a cause you can act on, usually around five times. Then read the chain backwards with "therefore". If it does not hold, a step is missing. Verify the root cause with data before you fix it.',['Toyota 5 Whys (Sakichi Toyoda)','Ishikawa 6M categories','Therefore test','Go and see'])+
+  `<div class="cards">${cur.whys.map((w,i)=>{const chain=w.whys.filter(x=>x&&x.trim());
+   return`<section class="panel"><div class="ph"><h3>Problem ${i+1}</h3><div class="row"><button class="btn small" data-act="toAction" data-i="${i}">Create countermeasure →</button><button class="icon" data-act="del" data-list="whys" data-i="${i}" aria-label="Remove problem">✕</button></div></div>
+    ${input(`whys.${i}.problem`,{label:'Problem statement',hint:'What, where, when, how much. No cause or blame.',rows:2})}
+    <div class="ladder2">${w.whys.map((x,j)=>`<div class="rung"><span class="k">Why ${j+1}?</span><div class="row" style="flex-wrap:nowrap;align-items:start">${input(`whys.${i}.whys.${j}`,{rows:1,ph:j===0?'Why does the problem happen?':'Why does that happen?'})}<button class="icon" data-act="delWhy" data-i="${i}" data-j="${j}" aria-label="Remove this why">✕</button></div></div>`).join('')}</div>
+    <div class="row"><button class="btn small" data-act="addWhy" data-i="${i}">+ Ask why again</button>${sampleFn?`<button class="btn small" data-act="suggestWhy" data-i="${i}">Suggest the next why</button>`:''}<span class="muted" id="sugg-${i}" style="font-size:.82rem"></span></div>
+    <div class="row">${input(`whys.${i}.root`,{label:'Root cause',hint:'Something a process change can fix',rows:2,cls:''})}${sel(`whys.${i}.cat`,SIXM.map(x=>[x,x]),'6M category')}</div>
+    <label class="check"><input type="checkbox" id="${fid(`whys.${i}.verified`)}" data-path="whys.${i}.verified" data-bool="1" ${w.verified?'checked':''}> Root cause verified with data or direct observation</label>
+    ${chain.length?`<div class="readback"><span class="tf">Therefore test: read it backwards</span>${(w.root?[w.root,...chain.slice().reverse()]:chain.slice().reverse()).map((x,k)=>`<span>${k?'<b>therefore</b> ':''}${esc(x)}</span>`).join('')}<span><b>therefore</b> ${esc(w.problem)}</span></div>`:''}
+   </section>`}).join('')||'<div class="empty">No problems yet. Send a finding from Hunt the waste, or add one here.</div>'}</div>
+   <div><button class="btn" data-act="add" data-list="whys">+ Add problem</button></div>`+coachBox()}
+
+function prio(a){const i=num(a.impact),e=num(a.effort);if(i>=3&&e<=2)return['qw','Quick win'];if(i>=3)return['mp','Major project'];if(e<=2)return['fi','Fill-in'];return['rc','Reconsider']}
+function matrixSVG(){const W=300,H=260,P=34;const acts=cur.actions;
+  const x=e=>P+(num(e)-0.5)/5*(W-P-8),y=i=>H-P-(num(i)-0.5)/5*(H-P-8);
+  const mx=P+(W-P-8)*0.5,my=H-P-(H-P-8)*0.5;
+  return`<svg class="mxsvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Impact versus effort matrix">
+   <rect x="${P}" y="8" width="${W-P-8}" height="${H-P-8}" fill="var(--sunk)" stroke="var(--line)"/>
+   <rect x="${P}" y="8" width="${mx-P}" height="${my-8}" fill="var(--va-soft)"/>
+   <line x1="${mx}" y1="8" x2="${mx}" y2="${H-P}" stroke="var(--line)"/><line x1="${P}" y1="${my}" x2="${W-8}" y2="${my}" stroke="var(--line)"/>
+   <text class="ql" x="${P+6}" y="22">Quick wins</text><text class="ql" x="${mx+6}" y="22">Major projects</text><text class="ql" x="${P+6}" y="${H-P-6}">Fill-ins</text><text class="ql" x="${mx+6}" y="${H-P-6}">Reconsider</text>
+   <text x="${(W+P)/2}" y="${H-8}" text-anchor="middle">Effort →</text><text x="12" y="${(H-P)/2}" text-anchor="middle" transform="rotate(-90 12 ${(H-P)/2})">Impact →</text>
+   ${acts.map((a,i)=>{const jx=(i%3-1)*7,jy=(Math.floor(i/3)%3-1)*7;return`<g><circle cx="${x(a.effort)+jx}" cy="${y(a.impact)+jy}" r="10" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/><text x="${x(a.effort)+jx}" y="${y(a.impact)+jy+3.5}" text-anchor="middle" style="fill:var(--accent-ink);font-weight:600">${i+1}</text></g>`}).join('')}</svg>`}
+function rImprove(){const roots=cur.whys.filter(w=>w.root);
+  return stageHead('improve','Every countermeasure should trace back to a verified root cause. Try to eliminate the step before you try to make it faster. Run each change as a small experiment: plan, do, check, act.',['ECRS (Eliminate, Combine, Rearrange, Simplify)','Impact / effort','Deming PDCA','Poka-yoke'])+
+  `<section class="panel"><div class="ecrs">${Object.entries(ECRS).map(([k,n])=>`<div><b>${k} · ${n}</b>${{E:'Can we stop doing this step entirely?',C:'Can two steps or hand-offs become one?',R:'Can a different order or owner remove waiting?',S:'Can we make it error-proof (poka-yoke) or simpler?'}[k]}</div>`).join('')}</div></section>
+  <section class="panel"><div class="ph"><h3>Countermeasures</h3><button class="btn small" data-act="add" data-list="actions">+ Add countermeasure</button></div>
+   <div class="mx"><div id="matrix">${matrixSVG()}</div>
+   <div class="cards">${cur.actions.map((a,i)=>{const [pc,pn]=prio(a);return`<div class="card"><div class="ch"><span class="mono muted">#${i+1}</span><span class="prio ${pc}" id="prio-${i}">${pn}</span><span style="flex:1"></span><button class="icon" data-act="del" data-list="actions" data-i="${i}" aria-label="Remove countermeasure">✕</button></div>
+     ${input(`actions.${i}.title`,{label:'Countermeasure',rows:1})}
+     <div class="row">${sel(`actions.${i}.ecrs`,Object.entries(ECRS).map(([k,n])=>[k,k+' · '+n]),'ECRS')}${sel(`actions.${i}.why`,[['','No linked root cause'],...roots.map(w=>[w.id,'Root: '+w.root.slice(0,60)+(w.root.length>60?'…':'')])],'Addresses')}</div>
+     <div class="row">${sel(`actions.${i}.impact`,[1,2,3,4,5].map(n=>[n,n+' impact']),'Impact')}${sel(`actions.${i}.effort`,[1,2,3,4,5].map(n=>[n,n+' effort']),'Effort')}${input(`actions.${i}.owner`,{label:'Owner'})}${input(`actions.${i}.due`,{label:'Due',type:'date'})}</div>
+     <div class="field"><label>PDCA status</label><div class="seg" role="group" aria-label="PDCA status">${PDCA.map(s=>`<button data-act="status" data-i="${i}" data-s="${s}" aria-pressed="${a.status===s}">${s}</button>`).join('')}</div></div></div>`}).join('')||'<div class="empty">No countermeasures yet. Create one from a root cause in Find root causes.</div>'}</div></div></section>`+coachBox()}
+
+function kpiPct(k){const b=num(k.baseline),t=num(k.target),c=num(k.current);if(b===t||k.current===''||k.current==null)return 0;return Math.max(0,Math.min(100,(b-c)/(b-t)*100))}
+function rSustain(){
+  return stageHead('sustain','Lock in the new way of working so the process does not slide back. Measure the CTQs from stage 1, write the new standard, and agree in advance what happens when a measure drifts.',['Control plan','Standard work','SDCA (standardize-do-check-act)','Visual management'])+
+  `<section class="panel"><div class="ph"><h3>Key measures</h3>${cur.customer.ctqs.length?`<button class="btn small" data-act="ctqToKpi">Add KPIs from CTQs</button>`:''}</div>
+   <div class="tbl"><table><thead><tr><th>Measure</th><th>Unit</th><th>Baseline</th><th>Target</th><th>Current</th><th>Gap closed</th><th></th></tr></thead><tbody>
+   ${cur.kpis.map((k,i)=>`<tr><td style="min-width:180px">${input(`kpis.${i}.name`)}</td><td style="min-width:70px">${input(`kpis.${i}.unit`)}</td><td class="num">${input(`kpis.${i}.baseline`,{type:'number'})}</td><td class="num">${input(`kpis.${i}.target`,{type:'number'})}</td><td class="num">${input(`kpis.${i}.current`,{type:'number'})}</td>
+     <td style="min-width:120px"><div class="row" style="flex-wrap:nowrap;align-items:center"><div class="prog" style="flex:1"><span id="kp-${i}" style="width:${kpiPct(k)}%"></span></div><span class="mono" id="kpt-${i}" style="font-size:.78rem;width:36px;text-align:right">${kpiPct(k).toFixed(0)}%</span></div></td>
+     <td><button class="icon" data-act="del" data-list="kpis" data-i="${i}" aria-label="Remove measure">✕</button></td></tr>`).join('')||'<tr><td colspan="7" class="muted">No measures yet.</td></tr>'}
+   </tbody></table></div><div><button class="btn small" data-act="add" data-list="kpis">+ Add measure</button></div></section>
+  <div class="grid2"><section class="panel"><h3>New standard work</h3>${input('standard',{label:'The one best way we do it now',hint:'Numbered steps anyone could follow',rows:7})}</section>
+  <section class="panel"><h3>Control plan</h3>${input('reaction',{label:'Reaction plan',hint:'If a measure drifts, who does what, by when',rows:3})}${input('cadence',{label:'Review cadence and owner',rows:3})}</section></div>`+coachBox()}
+
+function rCase(){const c=cur.charter,g=gate(cur),gs=gateState(cur);const roi=num(c.budget)?num(c.benefit)/num(c.budget):0;
+  const needs=cur.customer.ctqs.map(q=>q.need).filter(Boolean);
+  return stageHead('case','Every project and product must match a real customer need, have a goal and a deadline, and be funded on data. A project with no clear problem, goal or end date is itself waste: it ties up money and people and teaches the team that work does not have to matter.',['Project charter','Stage-gate funding','Cost of poor quality','Pilot before scale'])+
+  `<div class="grid2"><section class="panel"><div class="ph"><h3>Charter</h3></div>
+    <div class="field"><label>Purpose</label><div class="seg" role="group" aria-label="Purpose">${['Fix a problem','Create something new'].map(k=>`<button data-act="kind" data-s="${k}" aria-pressed="${c.kind===k}">${k}</button>`).join('')}</div></div>
+    <div class="field"><label for="${fid('charter.need')}">Customer need it serves <span class="hint">${needs.length?'Pick one from your CTQ tree or type your own':'Fill in the CTQ tree in stage 1 first'}</span></label><input id="${fid('charter.need')}" data-path="charter.need" list="needList" value="${esc(c.need)}"><datalist id="needList">${needs.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></div>
+    ${input('charter.goal',{label:'Measurable goal',hint:'From X to Y by when',rows:2})}
+    <div class="row">${input('charter.deadline',{label:'Deadline',type:'date'})}${input('charter.sponsor',{label:'Sponsor (funds it)'})}${input('charter.lead',{label:'Lead (owns it)'})}</div>
+    ${input('charter.team',{label:'Team',hint:'Include people who do the work every day',rows:2})}
+   </section>
+   <section class="panel"><div class="ph"><h3>Funded on data</h3></div>
+    ${input('charter.evidence',{label:'Evidence',hint:'Data sources, sample sizes, observation',rows:3})}
+    <div class="row">${input('charter.costOfProblem',{label:c.kind==='Create something new'?'Opportunity value per year ($)':'Cost of the problem per year ($)',type:'number'})}${input('charter.benefit',{label:'Expected benefit per year ($)',type:'number'})}${input('charter.budget',{label:'Cost to fund ($)',type:'number'})}</div>
+    ${input('charter.costBasis',{label:'How the numbers were worked out',rows:3})}
+    <div class="row mono" style="font-size:.84rem;gap:18px"><span>Benefit ÷ cost: <b id="roi">${roi?roi.toFixed(1)+'×':'—'}</b></span><span>Payback: <b id="payback">${num(c.benefit)?(num(c.budget)/num(c.benefit)*12).toFixed(1)+' months':'—'}</b></span><span>Waste found so far: <b>${money(metrics(cur).wasteCost)}/yr</b></span></div>
+   </section></div>
+  <section class="panel" id="gate"><div class="ph"><h3>Funding gate</h3><span class="prio ${gs.ok?'qw':gs.zombie?'rc':'mp'}">${gs.label}</span></div>
+   ${gs.zombie?'<p class="muted" style="font-size:.86rem">A project without a customer need, a measurable goal or a deadline has nothing to finish against. It drifts, absorbs people and budget, and is the hardest kind of waste to see. Fix these first or stop the project.</p>':''}
+   <div class="ladder2">${g.map(([l,ok])=>`<div class="check" style="padding:5px 0"><span class="mono" style="color:var(--${ok?'va':'nva'});font-weight:600;width:18px">${ok?'✓':'✕'}</span>${esc(l)}</div>`).join('')}</div></section>`+coachBox()}
+function rPilot(){const p=cur.pilot;
+  return stageHead('pilot','Test the countermeasure small, for a fixed time, against criteria you set before you start. Then decide on the data: scale it, adjust and pilot again, or stop. Stopping a pilot that did not work is a success: it saved the full rollout cost.',['Deming PDCA','Controlled pilot','Pre-set success and kill criteria','Scale / adjust / stop'])+
+  `<section class="panel"><h3>Pilot plan</h3>
+   ${input('pilot.hypothesis',{label:'Hypothesis',hint:'If we [change], then [measure] will move from X to Y, because [root cause]',rows:3})}
+   ${input('pilot.scope',{label:'Scope',hint:'Where, who, how many, and what you compare against',rows:2})}
+   <div class="row">${input('pilot.start',{label:'Start',type:'date'})}${input('pilot.end',{label:'End',type:'date'})}</div>
+   ${input('pilot.kill',{label:'Stop criteria',hint:'What result means you stop at once',rows:2})}</section>
+  <section class="panel"><div class="ph"><h3>Success criteria</h3><span class="muted" style="font-size:.84rem">Set the thresholds before the pilot starts. Fill in results at the end.</span></div>
+   <div class="tbl"><table><thead><tr><th>Measure</th><th>Baseline</th><th>Success threshold</th><th>Pilot result</th><th></th></tr></thead><tbody>
+   ${p.criteria.map((x,i)=>`<tr><td style="min-width:180px">${input(`pilot.criteria.${i}.metric`)}</td><td>${input(`pilot.criteria.${i}.baseline`)}</td><td>${input(`pilot.criteria.${i}.threshold`)}</td><td>${input(`pilot.criteria.${i}.result`)}</td><td><button class="icon" data-act="del" data-list="pilot.criteria" data-i="${i}" aria-label="Remove criterion">✕</button></td></tr>`).join('')||'<tr><td colspan="5" class="muted">No criteria yet.</td></tr>'}
+   </tbody></table></div><div><button class="btn small" data-act="add" data-list="pilot.criteria">+ Add criterion</button></div></section>
+  <section class="panel"><h3>Decision</h3>
+   <div class="seg" role="group" aria-label="Pilot decision">${['Scale','Adjust','Stop'].map(k=>`<button data-act="decide" data-s="${k}" aria-pressed="${p.decision===k}">${{Scale:'Scale it',Adjust:'Adjust and re-pilot',Stop:'Stop'}[k]}</button>`).join('')}</div>
+   ${input('pilot.learnings',{label:'What we learned',rows:3})}</section>`+coachBox()}
+const R={case:rCase,pilot:rPilot,customer:rCustomer,map:rMap,waste:rWaste,why:rWhy,improve:rImprove,sustain:rSustain};
+function renderStage(){const y=window.scrollY;$('#stage').innerHTML=R[stage]();window.scrollTo(0,y)}
+
+/* ---------- live updates without losing focus ---------- */
+function liveRefresh(path){
+  renderStrip();renderRail();
+  if(stage==='map'&&$('#vsm'))$('#vsm').innerHTML=vsmHTML();
+  if(stage==='improve'&&$('#matrix'))$('#matrix').innerHTML=matrixSVG();
+  if(stage==='sustain'){cur.kpis.forEach((k,i)=>{const p=kpiPct(k),a=$('#kp-'+i),b=$('#kpt-'+i);if(a)a.style.width=p+'%';if(b)b.textContent=p.toFixed(0)+'%'})}
+  if(stage==='case'&&/^charter\./.test(path)&&$('#gate')){const g=$('#gate');const tmp=document.createElement('div');tmp.innerHTML=rCase();const ng=tmp.querySelector('#gate');if(ng)g.innerHTML=ng.innerHTML;['roi','payback'].forEach(id=>{const n=tmp.querySelector('#'+id);if(n&&$('#'+id))$('#'+id).textContent=n.textContent})}
+  if(path==='name'){renderProjects()}
+}
+document.addEventListener('input',e=>{const t=e.target;if(!t.dataset||!t.dataset.path||!cur)return;
+  let v=t.dataset.bool?t.checked:t.value; if(t.dataset.num)v=t.value===''?'':num(t.value);
+  const p=t.dataset.path; if(/\.(impact|effort)$/.test(p))v=num(v);
+  setPath(cur,p,v); if(cur.example&&p==='name')cur.example=false;
+  touched(); liveRefresh(p);
+  if(t.tagName==='SELECT'&&t.dataset.rerender)renderStage();
+  if(t.dataset.bool)renderStage();
+});
+document.addEventListener('change',e=>{if(e.target.id==='restoreFile'&&e.target.files[0]){restore(e.target.files[0]);e.target.value='';return}if(e.target.id==='projSel'){cur=projects[e.target.value];lsSave();renderAll()}});
+
+/* ---------- actions ---------- */
+const NEW={'pilot.criteria':()=>({id:uid(),metric:'',baseline:'',threshold:'',result:''}),'customer.faqs':()=>({q:'',a:''}),'customer.ctqs':()=>({need:'',driver:'',metric:'',target:''}),
+  steps:()=>({id:uid(),name:'',owner:'',type:'NNVA',ct:0,wait:0,defects:0,wastes:[],harmony:{P:'',R:'',S:''}}),
+  findings:()=>({id:uid(),stepId:'',waste:'',obs:'',so1:'',so2:'',impact:'',cost:'',costType:'Money'}),
+  whys:()=>({id:uid(),problem:'',whys:['','',''],root:'',cat:'Method',verified:false}),
+  actions:()=>({id:uid(),title:'',ecrs:'E',why:'',impact:3,effort:3,owner:'',due:'',status:'Plan'}),
+  kpis:()=>({id:uid(),name:'',unit:'',baseline:'',target:'',current:''})};
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,i=+b.dataset.i;
+  switch(a){
+  case'go':stage=b.dataset.k;lsSave();renderRail();renderStage();window.scrollTo({top:0});return;
+  case'add':getPath(cur,b.dataset.list).push(NEW[b.dataset.list]());break;
+  case'del':getPath(cur,b.dataset.list).splice(i,1);break;
+  case'move':{const j=i+ +b.dataset.d;if(j<0||j>=cur.steps.length)return;const s=cur.steps;[s[i],s[j]]=[s[j],s[i]];break}
+  case'toggleWaste':{const s=cur.steps[i];s.wastes=s.wastes||[];const w=b.dataset.w;s.wastes=s.wastes.includes(w)?s.wastes.filter(x=>x!==w):[...s.wastes,w];break}
+  case'addWhy':cur.whys[i].whys.push('');break;
+  case'delWhy':cur.whys[i].whys.splice(+b.dataset.j,1);break;
+  case'toWhy':{const f=cur.findings[i];const w=NEW.whys();w.problem=[f.obs,f.impact].filter(Boolean).join(' Impact: ');cur.whys.push(w);touched();stage='why';renderAll();toast('Added to 5 Whys');return}
+  case'toAction':{const w=cur.whys[i];const x=NEW.actions();x.why=w.root?w.id:'';cur.actions.push(x);touched();stage='improve';renderAll();toast(w.root?'Countermeasure linked to root cause':'Countermeasure added. Write the root cause to link it.');return}
+  case'status':cur.actions[i].status=b.dataset.s;break;
+  case'harm':{const st=cur.steps[i];st.harmony=st.harmony||{};st.harmony[b.dataset.h]=b.dataset.next;touched();$('#harmonyPanel').innerHTML=harmonyHTML();renderRail();return}
+  case'kind':cur.charter.kind=b.dataset.s;break;
+  case'decide':cur.pilot.decision=b.dataset.s;break;
+  case'ctqToKpi':cur.customer.ctqs.filter(q=>q.metric&&!cur.kpis.some(k=>k.name===q.metric)).forEach(q=>cur.kpis.push({id:uid(),name:q.metric,unit:'',baseline:'',target:'',current:''}));break;
+  case'newProject':{const p=blankProject();projects[p.id]=p;cur=p;stage='customer';touched();renderAll();$('#pname').focus();$('#pname').select();return}
+  case'askDelete':$('#delWrap').innerHTML=`<span class="confirm">Delete "${esc(cur.name)}"? <button class="btn small danger" data-act="doDelete">Delete</button><button class="btn small" data-act="cancelDelete">Keep</button></span>`;return;
+  case'cancelDelete':renderProjects();return;
+  case'doDelete':{const id=cur.id;delete projects[id];dirty.delete(id);if(dbRef){try{await dbRef.collection('data/users/'+userId).doc(id).delete()}catch(err){}}
+    if(!Object.keys(projects).length){const p=blankProject();projects[p.id]=p}
+    cur=Object.values(projects).sort((x,y)=>y.updated-x.updated)[0];lsSave();renderAll();toast('Project deleted');return}
+  case'exportA3':exportA3();return;
+  case'backup':backup();return;
+  case'restore':$('#restoreFile').click();return;
+  case'privacy':setSave($('#saveState').textContent);$('#privacyDlg').showModal();return;
+  case'coach':runCoach(b);return;
+  case'suggestWhy':suggestWhy(i,b);return;
+  default:return}
+  touched();renderStage();renderStrip();renderRail();
+});
+
+/* ---------- A3 export ---------- */
+function a3Text(){const p=cur,m=metrics(p),c=p.customer;const L=[];const h=s=>L.push('\n## '+s+'\n');
+  L.push('# A3: '+p.name);L.push('Updated '+new Date(p.updated).toLocaleDateString());
+  h('1. Customer and background (working backwards)');L.push('Customer: '+c.who,'Problem: '+c.problem,'Most important benefit: '+c.benefit,'Evidence: '+c.evidence);
+  if(c.headline)L.push('\nPress release: **'+c.headline+'**'+(c.subhead?'\n'+c.subhead:'')+(c.quote?'\n'+c.quote:''));
+  c.faqs.forEach(f=>L.push('- Q: '+f.q+'  A: '+f.a));
+  if(c.ctqs.length){L.push('\n| Need | Driver | CTQ | Target |\n|---|---|---|---|');c.ctqs.forEach(q=>L.push(`| ${q.need} | ${q.driver} | ${q.metric} | ${q.target} |`))}
+  {const ch=p.charter,gs=gateState(p);h('1b. Case and funding gate');L.push('Purpose: '+ch.kind,'Need served: '+ch.need,'Goal: '+ch.goal,'Deadline: '+ch.deadline,'Sponsor: '+ch.sponsor+' · Lead: '+ch.lead,'Evidence: '+ch.evidence,`Cost of problem ${money(ch.costOfProblem)}/yr · benefit ${money(ch.benefit)}/yr · cost to fund ${money(ch.budget)}`,'Basis: '+ch.costBasis,'Gate: '+gs.label);gate(p).forEach(([l,ok])=>L.push(`- [${ok?'x':' '}] ${l}`))}
+  h('2. Current condition');L.push(`Lead time ${fmtMin(m.lead)} · value-add ${fmtMin(m.va)} · PCE ${m.pce.toFixed(2)}% · rolled yield ${m.rty.toFixed(0)}%`);
+  {const hm=harmony(p);L.push(`People / resources / systems aligned: ${hm.rated?hm.pct.toFixed(0)+'%':'not rated'}`)}
+  L.push('\n| # | Step | Owner | Type | Wait | Work | Defects | Wastes | People | Resources | Systems |\n|---|---|---|---|---|---|---|---|---|---|---|');
+  p.steps.forEach((s,i)=>L.push(`| ${i+1} | ${s.name} | ${s.owner} | ${s.type} | ${fmtMin(s.wait)} | ${fmtMin(s.ct)} | ${num(s.defects)}% | ${(s.wastes||[]).join(' ')} | ${HARM.map(x=>({ok:'✓',bad:'✕'})[(s.harmony||{})[x.c]]||'?').join(' | ')} |`));
+  h('3. Waste findings (So what?)');p.findings.forEach(f=>{const s=p.steps.find(x=>x.id===f.stepId);const w=WASTES.find(x=>x.c===f.waste);L.push(`- **${w?w.n:'Waste'}${s?' at '+s.name:''}** (${money(f.cost)}/yr, ${f.costType}): ${f.obs}\n  - So what? ${f.so1}\n  - So what? ${f.so2}\n  - Customer impact: ${f.impact}`)});
+  h('4. Root cause analysis (5 Whys)');p.whys.forEach((w,i)=>{L.push(`**Problem ${i+1}:** ${w.problem}`);w.whys.filter(Boolean).forEach((x,j)=>L.push(`${j+1}. Why? ${x}`));L.push(`Root cause (${w.cat}${w.verified?', verified':', not yet verified'}): ${w.root||'—'}\n`)});
+  h('5. Countermeasures');L.push('| # | Countermeasure | ECRS | Priority | Owner | Due | PDCA |\n|---|---|---|---|---|---|---|');
+  p.actions.forEach((a,i)=>L.push(`| ${i+1} | ${a.title} | ${ECRS[a.ecrs]||''} | ${prio(a)[1]} | ${a.owner} | ${a.due} | ${a.status} |`));
+  {const pl=p.pilot;h('5b. Pilot');L.push('Hypothesis: '+pl.hypothesis,'Scope: '+pl.scope,'Dates: '+pl.start+' to '+pl.end,'Stop criteria: '+pl.kill);
+   L.push('\n| Measure | Baseline | Threshold | Result |\n|---|---|---|---|');pl.criteria.forEach(x=>L.push(`| ${x.metric} | ${x.baseline} | ${x.threshold} | ${x.result} |`));L.push('\nDecision: '+(pl.decision||'—'),'Learnings: '+pl.learnings)}
+  h('6. Follow-up and control');L.push('| Measure | Baseline | Target | Current | Gap closed |\n|---|---|---|---|---|');
+  p.kpis.forEach(k=>L.push(`| ${k.name} (${k.unit}) | ${k.baseline} | ${k.target} | ${k.current} | ${kpiPct(k).toFixed(0)}% |`));
+  L.push('\n**Standard work**\n'+p.standard,'\n**Reaction plan**\n'+p.reaction,'\n**Review cadence**\n'+p.cadence);
+  return L.join('\n')}
+function download(filename,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+function exportA3(){const fn=(cur.name||'process').replace(/[^\w-]+/g,'-').toLowerCase()+'-A3.md';download(fn,a3Text(),'text/markdown');toast('A3 report downloaded')}
+function backup(){download('kaizen-workbench-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({app:'kaizen-workbench',version:1,projects},null,2),'application/json');toast('Backup downloaded')}
+function restore(file){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);const list=Object.values(d.projects||{});if(!list.length)throw 0;
+  list.forEach(p=>{if(p&&p.id&&p.steps)projects[p.id]=normalize(p)});cur=projects[list[0].id]||cur;lsSave();renderAll();toast('Restored '+list.length+' project'+(list.length>1?'s':''))}
+  catch(e){toast('That file is not a Kaizen Workbench backup')}};r.readAsText(file)}
+
+/* ---------- AI coach ---------- */
+const FOCUS={
+  case:'Act as a funding committee. Check the project is matched to a real customer need, has a measurable goal and deadline, is backed by data, and that the cost of the problem, expected benefit and funding cost are believable. Challenge any sign this is a project without a real problem, or over-planned or over-staffed for its size. Say whether you would fund it now.',
+  pilot:'Check the hypothesis is testable, scope is small with a comparison group, criteria and stop criteria were set in advance, and the decision follows from the results. Say whether the evidence supports scaling.',
+  customer:'Check that the customer is specific, the need is in customer words, the press release headline is a customer benefit (not a feature or internal goal), the FAQ asks hard questions, and each CTQ is measurable with a target.',
+  map:'Check the value-add classification from the customer point of view, point out where waiting dominates lead time, the steps with the worst defect rates, and hand-offs that could be removed. Use the people / resources / systems ratings to name where they are not working in harmony (e.g. over-staffed, idle resources, systems forcing workarounds). Quote the PCE and lead time.',
+  waste:'Point out likely wastes that are missing from the matrix (by step and DOWNTIME letter), including over-planning, over-staffing and signs of disengagement or complacency. Check each "So what?" ladder reaches a customer or business impact with a cost estimate, and challenge cost numbers that look unsupported. Name the 2 findings to prioritise and why.',
+  why:'Check each 5 Whys chain: does each answer explain the one before it (therefore test)? Flag jumps in logic, blame on people instead of process, symptoms mistaken for root causes, and unverified causes. Suggest how to verify with data.',
+  improve:'Check each countermeasure traces to a root cause, prefers Eliminate over Simplify, has an owner and date, and is small enough to run as a PDCA experiment. Suggest error-proofing (poka-yoke) where relevant and anything missing.',
+  sustain:'Check that KPIs cover the CTQs, have baselines and targets, that standard work is specific, and that the reaction plan says who acts, on what trigger, by when. Suggest a simple visual management board.'};
+function projectBrief(){const p=JSON.parse(JSON.stringify(cur));delete p.id;delete p.updated;delete p.example;return JSON.stringify(p)}
+async function runCoach(btn){const out=$('#coachOut');out.hidden=false;out.textContent='Thinking…';btn.disabled=true;
+  const st=STAGES.find(s=>s.k===stage);
+  const prompt=`You are an experienced Lean Six Sigma Master Black Belt coaching a manager. They are on the stage "${st.t}" (${st.m}) of a process-improvement project that runs: work backwards from the customer, make a data-backed funding case, map the value stream, hunt the 8 wastes with a "So what?" ladder, 5 Whys root cause, ECRS/PDCA countermeasures, a controlled pilot, sustain with KPIs and standard work.\n\nFocus: ${FOCUS[stage]}\n\nReply in plain text, no Markdown headings, under 220 words: 3 to 5 short bullet points starting with "- ", each naming a specific item from their data and a concrete next action. End with one challenging question that starts with "So what" or "Why".\n\nProject data (JSON):\n${projectBrief()}`;
+  try{const r=await sampleFn(prompt,{onText:u=>{out.textContent=u.text},cache:false});out.textContent=r.text}
+  catch(e){out.textContent=e&&e.code==='not_granted'?'The coach needs your permission to ask Claude. Allow it from this page\'s permissions to use it.':e&&e.code==='rate_limited'?'Too many requests right now. Try again in a minute.':'The coach could not answer. '+(e&&e.text?e.text:'Try again.')}
+  btn.disabled=false}
+async function suggestWhy(i,btn){const w=cur.whys[i];const el=$('#sugg-'+i);const chain=w.whys.filter(x=>x&&x.trim());
+  btn.disabled=true;el.textContent='Thinking…';
+  const prompt=`5 Whys root cause analysis for a business process (${cur.name}).\nProblem: ${w.problem}\n${chain.map((x,j)=>'Why '+(j+1)+': '+x).join('\n')}\n\nPropose the single most likely next answer to "Why?" for the last line, as one short factual sentence the team could verify. Focus on process, policy or system causes, never blame on individuals. Reply with only that sentence.`;
+  try{const r=await sampleFn(prompt,{modelTier:'quick'});const s=r.text.trim().replace(/^["']|["']$/g,'');
+    const empty=w.whys.findIndex(x=>!x||!x.trim());if(empty>=0)w.whys[empty]=s;else w.whys.push(s);
+    touched();renderStage();toast('Suggested why added. Check it against the facts.')}
+  catch(e){el.textContent=e&&e.code==='not_granted'?'Permission to ask Claude was not given.':'No suggestion this time.';btn.disabled=false}}
+
+/* ---------- boot ---------- */
+lsLoad();
+if(!cur){const p=exampleProject();projects[p.id]=p;cur=p}
+if(!R[stage])stage='customer';
+renderAll();setSave(cur.example?'Example project. Edit anything, or start a new project.':'');
+initCaps();
+</script>
+
+</body></html>
+</body>
+</html>

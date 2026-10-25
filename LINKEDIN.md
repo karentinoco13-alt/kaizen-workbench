@@ -16,12 +16,35 @@ So I built Kaizen Workbench, a free process-improvement app for managers. It bri
 🔹 The 5 Whys to reach the real root cause
 🔹 Pilot, then scale or stop, and lock in the gains with standard work
 🔹 A built-in SOP that teaches teams to use it step by step
+🔹 Fully bilingual: English and Spanish
 
 The principle behind it: everything in an organization must add value. People, resources and systems should work together to produce it.
 
 Try it here (no sign-up, and your data stays in your browser): https://karentinoco13-alt.github.io/kaizen-workbench/
 
 #ProcessImprovement #LeanSixSigma #ContinuousImprovement #Kaizen #OperationalExcellence #Leadership
+
+## Post en español
+
+El desperdicio siempre se paga. A veces en dinero. A veces en clientes que esperan. Y muchas veces en personas que dejan de poner atención al detalle porque su trabajo ya no parece importar.
+
+Eso incluye el desperdicio que casi nunca llamamos así: sobreplanear, sobrecontratar y proyectos sin una meta clara, sin fecha límite y sin un problema real que resolver.
+
+Por eso creé Kaizen Workbench, una app gratuita de mejora de procesos para líderes. Reúne los métodos que mejor han funcionado durante décadas:
+
+🔹 Working Backwards de Amazon: empezar por la necesidad del cliente
+🔹 Un filtro de financiamiento: cada proyecto ligado a una necesidad, financiado con datos y con un plan piloto
+🔹 El mapeo del flujo de valor de Toyota y los 8 desperdicios, con una escalera del "¿Y qué?" que le pone un costo a cada uno
+🔹 Los 5 porqués para llegar a la verdadera causa raíz
+🔹 Pilotear, luego escalar o parar, y asegurar los logros con trabajo estándar
+🔹 Un procedimiento integrado que enseña a los equipos a usarla paso a paso
+🔹 Totalmente bilingüe: inglés y español
+
+El principio detrás: todo en una organización debe agregar valor. Las personas, los recursos y los sistemas deben trabajar juntos para producirlo.
+
+Pruébala aquí (sin registro, y tus datos se quedan en tu navegador): https://karentinoco13-alt.github.io/kaizen-workbench/#es
+
+#MejoraContinua #LeanSixSigma #Kaizen #ExcelenciaOperacional #Liderazgo
 
 ## Featured section (Projects)
 

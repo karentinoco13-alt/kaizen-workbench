@@ -35,7 +35,7 @@ A live metrics strip shows lead time, value-add time, process cycle efficiency, 
 
 The **SOP** tab in the app is a full standard operating procedure that teaches people how to use it properly: purpose and guiding principles, roles, key terms, a step-by-step procedure for every stage with a clear "Done when" condition, a weekly rhythm, what to do when the app shows a warning signal, troubleshooting, and the research foundations behind each method. Each stage in the SOP links straight to that stage in the app.
 
-The same SOP is in this repository as [SOP.md](SOP.md).
+The same SOP is in this repository as [SOP.md](SOP.md), and in Spanish as [SOP.es.md](SOP.es.md).
 
 ![The SOP tab: a step-by-step blueprint for using the app](docs/screenshot-sop.png)
 
@@ -44,6 +44,10 @@ The app opens with a fully worked example (customer refund requests) so you can 
 ![Value stream map with wait time above the line and work time below](docs/screenshot-value-stream.png)
 
 ![Funding gate: every project matched to a need and funded on data](docs/screenshot-funding-gate.png)
+
+## English and Spanish
+
+The whole app works in English and Spanish. Use the **EN | ES** switch in the header. Every screen, the SOP, the privacy notes, the example project and the exported A3 report change language. What you type stays as you wrote it. The app opens in Spanish for browsers set to Spanish and remembers each person's choice. To share the Spanish version directly, use [this link](https://karentinoco13-alt.github.io/kaizen-workbench/#es).
 
 ## Privacy
 

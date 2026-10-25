@@ -31,6 +31,14 @@ A live metrics strip shows lead time, value-add time, process cycle efficiency, 
 
 **Export A3** turns the whole project into a one-page Toyota-style A3 report in Markdown.
 
+## SOP: the blueprint
+
+The **SOP** tab in the app is a full standard operating procedure that teaches people how to use it properly: purpose and guiding principles, roles, key terms, a step-by-step procedure for every stage with a clear "Done when" condition, a weekly rhythm, what to do when the app shows a warning signal, troubleshooting, and the research foundations behind each method. Each stage in the SOP links straight to that stage in the app.
+
+The same SOP is in this repository as [SOP.md](SOP.md).
+
+![The SOP tab: a step-by-step blueprint for using the app](docs/screenshot-sop.png)
+
 The app opens with a fully worked example (customer refund requests) so you can see every stage in use.
 
 ![Value stream map with wait time above the line and work time below](docs/screenshot-value-stream.png)
@@ -39,11 +47,11 @@ The app opens with a fully worked example (customer refund requests) so you can 
 
 ## Privacy
 
-Your projects never leave your browser. There is no account, no server and no tracking. Work saves automatically in the browser's local storage on your computer. Use **Back up** to save a copy as a file and **Restore** to load it elsewhere. The **Privacy & security** button in the app explains this in full.
+Your projects never leave your browser. There is no account, no server and no tracking. Work saves automatically in the browser's local storage on your computer. Use **Back up** to save a copy as a file and **Restore** to load it elsewhere. The **Privacy** tab in the app explains this in full.
 
 ## Tech
 
-One self-contained HTML file with plain JavaScript and CSS. No framework, no build step and no dependencies apart from Google Fonts. It works on desktop and mobile, in light and dark mode. Hosted on GitHub Pages.
+One self-contained HTML file with plain JavaScript and CSS, in a navy and gold brand shared with my other apps. No framework, no build step and no dependencies apart from Google Fonts. It works on desktop and mobile, in light and dark mode. Hosted on GitHub Pages.
 
 To run it locally, download `index.html` and open it in a browser.
 

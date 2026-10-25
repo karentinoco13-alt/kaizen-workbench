@@ -15,6 +15,7 @@ So I built Kaizen Workbench, a free process-improvement app for managers. It bri
 🔹 Toyota value stream mapping and the 8 wastes, with a "So what?" ladder that puts a dollar cost on each one
 🔹 The 5 Whys to reach the real root cause
 🔹 Pilot, then scale or stop, and lock in the gains with standard work
+🔹 A built-in SOP that teaches teams to use it step by step
 
 The principle behind it: everything in an organization must add value. People, resources and systems should work together to produce it.
 

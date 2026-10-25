@@ -14,36 +14,42 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: a shop-floor workbench. Sticky stage rail on the left (the improvement sequence), working surface on the right, value-stream metrics strip on top. */
+/* Brand: navy and gold (shared with Growth Compass). Layout: a shop-floor workbench. Sticky stage rail on the left (the improvement sequence), working surface on the right, value-stream metrics strip on top. */
 :root{
-  --bg:#eef1f4; --surface:#ffffff; --sunk:#e3e8ee; --line:#cfd6df; --ink:#16202c; --muted:#5a6676;
-  --accent:#1d5c8f; --accent-ink:#ffffff; --accent-soft:#dbe8f3;
-  --amber:#c98a00; --amber-soft:#fbefd0;
-  --va:#2f8a57; --va-soft:#d8efe1; --nnva:#c98a00; --nnva-soft:#fbefd0; --nva:#c43c33; --nva-soft:#f8dcd9;
-  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
-  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --bg:#F3F5F9; --surface:#FFFFFF; --sunk:#E7ECF4; --line:#D3DBE8; --ink:#0F1E3D; --muted:#56627A;
+  --accent:#1F4E9C; --accent-ink:#FFFFFF; --accent-soft:#DEE7F7;
+  --amber:#8C6A0E; --amber-soft:#F7EDD0;
+  --navy:#0F2347; --navy-2:#1A3463; --on-navy:#F4F6FB; --on-navy-muted:#B9C5DD; --gold:#D4A72C; --gold-soft:#F7EDD0;
+  --btn-bg:#0F2347; --btn-fg:#FFFFFF;
+  --va:#1E7A3C; --va-soft:#DCEFE2; --nnva:#A35F00; --nnva-soft:#F8E8CF; --nva:#B3261E; --nva-soft:#F6DCDA;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
   --r:6px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0f141a; --surface:#18202a; --sunk:#121920; --line:#2c3846; --ink:#e4e9ef; --muted:#93a0b0;
-  --accent:#6fa8d8; --accent-ink:#0c1620; --accent-soft:#1b3045;
-  --amber:#e7b23a; --amber-soft:#3a2f14;
-  --va:#5cc188; --va-soft:#173326; --nnva:#e7b23a; --nnva-soft:#3a2f14; --nva:#ef7b72; --nva-soft:#401d1b;
+  --bg:#0A1328; --surface:#111D36; --sunk:#182743; --line:#26385C; --ink:#E9EEF8; --muted:#9DABC4;
+  --accent:#86AAEB; --accent-ink:#0A1328; --accent-soft:#1B2E55;
+  --amber:#E6BE52; --amber-soft:#3A2F12;
+  --navy:#081127; --navy-2:#13234A; --on-navy:#F4F6FB; --on-navy-muted:#A8B6D2; --gold:#E6BE52; --gold-soft:#3A2F12;
+  --btn-bg:#E6BE52; --btn-fg:#0A1328;
+  --va:#5BC77E; --va-soft:#16331F; --nnva:#F0A845; --nnva-soft:#3A2A12; --nva:#F2827A; --nva-soft:#401D1B;
   color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0f141a; --surface:#18202a; --sunk:#121920; --line:#2c3846; --ink:#e4e9ef; --muted:#93a0b0;
-  --accent:#6fa8d8; --accent-ink:#0c1620; --accent-soft:#1b3045;
-  --amber:#e7b23a; --amber-soft:#3a2f14;
-  --va:#5cc188; --va-soft:#173326; --nnva:#e7b23a; --nnva-soft:#3a2f14; --nva:#ef7b72; --nva-soft:#401d1b;
+  --bg:#0A1328; --surface:#111D36; --sunk:#182743; --line:#26385C; --ink:#E9EEF8; --muted:#9DABC4;
+  --accent:#86AAEB; --accent-ink:#0A1328; --accent-soft:#1B2E55;
+  --amber:#E6BE52; --amber-soft:#3A2F12;
+  --navy:#081127; --navy-2:#13234A; --on-navy:#F4F6FB; --on-navy-muted:#A8B6D2; --gold:#E6BE52; --gold-soft:#3A2F12;
+  --btn-bg:#E6BE52; --btn-fg:#0A1328;
+  --va:#5BC77E; --va-soft:#16331F; --nnva:#F0A845; --nnva-soft:#3A2A12; --nva:#F2827A; --nva-soft:#401D1B;
   color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
 .wrap{max-width:1280px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
-h1,h2,h3{font-family:var(--f-display);font-stretch:80%;text-wrap:balance;margin:0;line-height:1.1}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
 h2{font-size:1.9rem;font-weight:800}
 h3{font-size:1.15rem;font-weight:700;font-stretch:88%}
 p{margin:0}
@@ -73,7 +79,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);outline:none;
 
 /* project header */
 .phead{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:14px}
-.phead input.pname{font-family:var(--f-display);font-stretch:80%;font-size:1.35rem;font-weight:700;background:transparent;border-color:transparent;padding:4px 6px;flex:1 1 320px}
+.phead input.pname{font-family:var(--f-display);font-size:1.35rem;font-weight:700;background:transparent;border-color:transparent;padding:4px 6px;flex:1 1 320px}
 .phead input.pname:hover{border-color:var(--line)}
 .pill{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em;padding:3px 8px;border-radius:99px;background:var(--sunk);color:var(--muted);white-space:nowrap}
 .pill.example{background:var(--amber-soft);color:var(--amber)}
@@ -198,7 +204,7 @@ td.num input{width:84px;text-align:right;font-family:var(--f-mono)}
 .ecrs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;font-size:.78rem}
 @media (max-width:620px){.ecrs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .ecrs div{border:1px solid var(--line);border-radius:var(--r);padding:8px 10px}
-.ecrs b{font-family:var(--f-display);font-stretch:80%;font-size:1.1rem;display:block}
+.ecrs b{font-family:var(--f-display);font-size:1.1rem;display:block}
 
 /* sustain */
 .prog{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden;min-width:80px}
@@ -222,15 +228,62 @@ td.num input{width:84px;text-align:right;font-family:var(--f-mono)}
 .dlg .now{padding:8px 12px;background:var(--accent-soft);border-radius:var(--r)}
 .coach .note{font-size:.76rem;color:var(--muted)}
 .linkbtn{border:0;background:none;padding:0;color:var(--accent);text-decoration:underline;font:inherit}
+/* brand bar */
+.bar{background:var(--navy);border-bottom:3px solid var(--gold);color:var(--on-navy)}
+.bar-in{max-width:1280px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.bar .brand{display:flex;align-items:center;gap:12px}
+.bar .brand h1{color:var(--on-navy);font-size:1.6rem;font-weight:700;letter-spacing:.005em}
+.logo{width:40px;height:40px;flex:0 0 40px}
+.tabs{display:flex;gap:4px;background:var(--navy-2);padding:4px;border-radius:10px;flex-wrap:wrap}
+.tab{border:0;background:transparent;color:var(--on-navy-muted);font-weight:600;padding:8px 16px;border-radius:7px;font-size:.98rem}
+.tab:hover{color:var(--on-navy)}
+.tab[aria-pressed="true"]{background:var(--gold);color:#0F1E3D}
+.bar :focus-visible{outline-color:var(--gold)}
+.top .tag{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.btn.primary{background:var(--btn-bg);border-color:var(--btn-bg);color:var(--btn-fg)}
+.btn:hover{border-color:var(--gold)}
+.eyebrow{color:var(--amber)}
+.strip{border-top:3px solid var(--gold)}
+.rail button[aria-current="step"]{border-left-color:var(--gold)}
+@media (max-width:860px){.rail button[aria-current="step"]{border-bottom-color:var(--gold)}}
+.seg button[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-fg)}
+.coach{border-color:var(--gold);background:var(--gold-soft)}
+/* SOP */
+.sopgrid{display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px;align-items:start}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;flex-direction:column;gap:1px}
+.toc .eyebrow{padding:0 12px 6px}
+.toc button{text-align:left;border:0;border-left:3px solid transparent;background:transparent;padding:6px 10px;font-size:.88rem;color:var(--muted);border-radius:0 var(--r) var(--r) 0}
+.toc button:hover{color:var(--ink);border-left-color:var(--gold);background:var(--surface)}
+.doc{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:var(--r);padding:28px clamp(16px,4vw,44px) 36px;min-width:0;max-width:980px}
+.doc h2{font-size:2rem;font-weight:700;margin:0 0 18px}
+.doc h3{font-size:1.4rem;font-weight:700;margin:34px 0 10px;padding-top:16px;border-top:1px solid var(--line);scroll-margin-top:16px}
+.doc h4{font-size:1.1rem;font-weight:700;margin:24px 0 8px;scroll-margin-top:16px}
+.doc p{margin:8px 0;max-width:75ch}
+.doc ul,.doc ol{padding-left:22px;margin:8px 0;display:flex;flex-direction:column;gap:5px;max-width:75ch}
+.doc .tbl{margin:10px 0 12px}
+.doc td{vertical-align:top;padding:8px 10px}
+.doc td:first-child b{white-space:nowrap}
+.doc hr{border:0;border-top:1px solid var(--line);margin:20px 0}
+.doc .go{margin:6px 0 4px}
+@media (max-width:860px){.sopgrid{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:var(--r);font-size:.86rem;z-index:20}
 @media (prefers-reduced-motion:no-preference){.stage{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}}
 </style>
 </head>
 <body>
 
+<header class="bar"><div class="bar-in">
+  <div class="brand"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="var(--gold)" stroke-width="2.5"/><path d="M10 28h6v-5h6v-5h6v-9" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M24.5 12.5L28 9l3.5 3.5" fill="none" stroke="var(--on-navy)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg><h1>Kaizen Workbench</h1></div>
+  <nav class="tabs" aria-label="Views">
+    <button class="tab" data-act="view" data-v="work" aria-pressed="true">Workbench</button>
+    <button class="tab" data-act="view" data-v="sop" aria-pressed="false">SOP</button>
+    <button class="tab" data-act="privacy">Privacy</button>
+  </nav>
+</div></header>
 <div class="wrap">
-  <header class="top">
-    <div class="brand"><h1>Kaizen Workbench</h1><span class="tag">need → case → flow → waste → cause → countermeasure → pilot → standard</span></div>
+ <div id="workView">
+  <div class="top">
+    <span class="tag">need → case → flow → waste → cause → countermeasure → pilot → standard</span>
     <div class="projbar">
       <label for="projSel" class="eyebrow">Project</label>
       <select id="projSel"></select>
@@ -240,9 +293,8 @@ td.num input{width:84px;text-align:right;font-family:var(--f-mono)}
       <button class="btn ghost small" data-act="restore">Restore</button>
       <input type="file" id="restoreFile" accept=".json,application/json" hidden>
       <span id="delWrap"><button class="btn ghost danger small" data-act="askDelete">Delete</button></span>
-      <button class="btn ghost small" data-act="privacy">Privacy &amp; security</button>
     </div>
-  </header>
+  </div>
 
   <div class="phead">
     <input id="pname" class="pname" aria-label="Project name" data-path="name">
@@ -256,6 +308,8 @@ td.num input{width:84px;text-align:right;font-family:var(--f-mono)}
     <nav class="rail" id="rail" aria-label="Improvement stages"></nav>
     <main class="stage" id="stage"></main>
   </div>
+ </div>
+ <section id="sopView" class="sop" aria-label="Standard operating procedure" hidden></section>
 </div>
 <div id="toast" class="toast" hidden></div>
 <dialog id="privacyDlg" class="dlg" aria-labelledby="privacyTitle">
@@ -272,6 +326,8 @@ td.num input{width:84px;text-align:right;font-family:var(--f-mono)}
   <p>Sharing the link gives people the app, not your projects. Each person starts with the example and their own projects in their own browser.</p>
   <h3>Deleting a project</h3>
   <p>Delete removes the project from this browser for good. If you made a backup file, that file is not affected.</p>
+  <h3>Good practice</h3>
+  <p>Describe customers and colleagues by role, not by name, and leave out health, financial or other personal details. The method works just as well without them.</p>
   <form method="dialog"><button class="btn primary">Close</button></form>
 </dialog>
 
@@ -659,7 +715,9 @@ const NEW={'pilot.criteria':()=>({id:uid(),metric:'',baseline:'',threshold:'',re
   kpis:()=>({id:uid(),name:'',unit:'',baseline:'',target:'',current:''})};
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,i=+b.dataset.i;
   switch(a){
-  case'go':stage=b.dataset.k;lsSave();renderRail();renderStage();window.scrollTo({top:0});return;
+  case'view':setView(b.dataset.v);return;
+  case'toc':{const el=document.getElementById(b.dataset.id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return}
+  case'go':stage=b.dataset.k;if(view!=='work')setView('work');lsSave();renderRail();renderStage();window.scrollTo({top:0});return;
   case'add':getPath(cur,b.dataset.list).push(NEW[b.dataset.list]());break;
   case'del':getPath(cur,b.dataset.list).splice(i,1);break;
   case'move':{const j=i+ +b.dataset.d;if(j<0||j>=cur.steps.length)return;const s=cur.steps;[s[i],s[j]]=[s[j],s[i]];break}
@@ -743,11 +801,37 @@ async function suggestWhy(i,btn){const w=cur.whys[i];const el=$('#sugg-'+i);cons
     touched();renderStage();toast('Suggested why added. Check it against the facts.')}
   catch(e){el.textContent=e&&e.code==='not_granted'?'Permission to ask Claude was not given.':'No suggestion this time.';btn.disabled=false}}
 
+/* ---------- SOP (blueprint) ---------- */
+const SOP_MD="# Kaizen Workbench: Standard Operating Procedure\n\n| | |\n|---|---|\n| **Document** | SOP: Using Kaizen Workbench to improve processes and fund improvement work |\n| **Version** | 1.0 |\n| **Effective date** | 25 October 2026 |\n| **Applies to** | Managers, process owners, project sponsors and improvement team members |\n| **Review cycle** | Every 6 months, or when the app changes |\n\n---\n\n## 1. Purpose\n\nThis SOP is the blueprint for using Kaizen Workbench. Follow it step by step to:\n\n- Start every improvement from a real customer need, not from an internal idea or opinion.\n- Fund only the projects and products that are matched to a need, backed by data, and have a goal, a deadline and a pilot plan.\n- Find and remove waste at every step of a process, and put a cost on it so the right waste gets fixed first.\n- Fix root causes, not symptoms, and prove a fix works in a small pilot before scaling it.\n- Lock in the gains with measures, standard work and a control plan, so the process does not slide back.\n\n### 1.1 Guiding principles\n\n- **Everything must add value.** People, resources and systems should work in harmony to produce value the customer would pay for. Anything that does not is waste.\n- **Waste always gets paid for.** In money, in capacity, in customers who wait, or in people who stop paying attention to detail because the work feels pointless.\n- **Waste includes how we plan and staff.** Overproduction, over-planning and over-staffing are waste. So is a project with no clear goal, no deadline and no real problem to solve.\n- **Data before funding.** A project is funded on evidence, not on enthusiasm or seniority.\n- **Pilot before scaling.** Test small, for a fixed time, against criteria set in advance. Stopping a pilot that did not work is a success.\n- **Fix the process, not the person.** Root causes are found in methods, systems, inputs and measures. Blame stops learning.\n- **Go and see.** Map the process where the work actually happens, with the people who do it.\n\n## 2. Scope\n\n**In scope:** improving existing processes, deciding whether to fund an improvement project or a new product idea, running pilots, and sustaining results.\n\n**Out of scope:** Kaizen Workbench must **not** be used to rate, rank or discipline individual employees. Findings describe processes, not people. Decisions about roles or staffing that come out of a project follow your normal HR process.\n\n## 3. Roles and responsibilities\n\n| Role | Responsibilities |\n|---|---|\n| **Sponsor** | Owns the business problem, funds the work, decides at the funding gate and at the end of the pilot, and removes barriers. |\n| **Project lead** (process owner or manager) | Runs the project in the app from stage 1 to 8, keeps it up to date, and presents the A3 at reviews. |\n| **Improvement team** | People who do the work every day. They walk the process, spot waste, answer the 5 Whys and test countermeasures. |\n| **Customer voice** | A customer, or someone who speaks for them with evidence (survey, complaints, interviews). Confirms the need and the CTQs. |\n| **Finance partner** | Checks the cost of waste, the cost of the problem, the expected benefit and the cost to fund before the funding gate. |\n\n## 4. Key terms\n\n| Term | Meaning |\n|---|---|\n| **Working backwards** | Amazon's method of starting with the customer: write the press release and FAQ for the finished result before designing the work. |\n| **CTQ (critical to quality)** | A customer need turned into something you can measure, with a target. Example: \"Refund issued within 24 hours\". |\n| **Funding gate** | Nine checks a project must pass before it is funded. All nine passed means **Ready to fund**. |\n| **Zombie project** | A project with no customer need, no measurable goal or no deadline. It drifts and absorbs people and money. The app flags it as **Zombie risk**. |\n| **Value stream map** | A picture of every step in a process, with wait time above the line and work time below. |\n| **VA / NNVA / NVA** | **Value-adding**: the customer would pay for it. **Necessary non-value-adding**: required by law, policy or today's technology. **Non-value-adding**: pure waste, remove it. |\n| **Lead time** | Total time from start to finish, including all waiting. |\n| **Process cycle efficiency (PCE)** | Value-adding time divided by lead time. Under 5% is common and shows large waiting waste. |\n| **Rolled throughput yield (RTY)** | The chance a piece of work gets through every step right first time. |\n| **DOWNTIME** | The 8 wastes: Defects, Overproduction, Waiting, Non-utilized talent, Transportation, Inventory, Motion, Extra-processing. |\n| **\"So what?\" ladder** | Asking \"So what?\" after each finding until you reach the impact on the customer or the business, and its yearly cost. |\n| **Harmony check** | Rating whether the people, resources and systems at each step support the value or create friction. |\n| **5 Whys** | Asking \"Why?\" until you reach a cause a process change can fix, usually about five times. |\n| **Therefore test** | Reading the 5 Whys backwards with \"therefore\". If a link does not hold, a step is missing. |\n| **6M** | Cause categories from the Ishikawa (fishbone) diagram: People, Method, Machine / systems, Material / inputs, Measurement, Environment. |\n| **ECRS** | The order to try countermeasures in: Eliminate, Combine, Rearrange, Simplify. |\n| **PDCA** | Plan, Do, Check, Act: Deming's cycle for running every change as an experiment. |\n| **Stop criteria** | A pilot result, agreed before starting, that means you stop at once. |\n| **Standard work** | The current best way to do the process, written so anyone can follow it. |\n| **A3** | Toyota's one-page report of a whole improvement: background, current state, analysis, countermeasures, results and follow-up. |\n\n## 5. Procedure\n\nWork through the stages in order. Each stage has a green dot in the stage list when its \"Done when\" condition is met. Do not move to the funding gate until stage 1 is done, and do not scale anything until stage 7 is done.\n\n### 5.1 Setup (project lead, once per project)\n\n1. Read this SOP. If you are new, open the **example project** (Customer refund requests) and look at each stage first.\n2. Click **+ New project** and give it a name that describes the process, for example \"Supplier invoice approval\".\n3. Agree the sponsor, the team and the customer voice before you start stage 1.\n4. Book the reviews in section 5.10 in your calendar.\n\n### 5.2 Stage 1: Work backwards from the customer\n\n| Step | Action | Who |\n|---|---|---|\n| 1 | Answer the five customer questions. Name a specific customer, not a department. | Lead with customer voice |\n| 2 | Under **How do you know?**, write the evidence: data, surveys, complaints, interviews. | Lead |\n| 3 | Write the future press release headline in the customer's words, as if the work is already done. | Team |\n| 4 | Add at least two hard FAQ questions a skeptic would ask, with honest answers. | Team |\n| 5 | Turn each customer need into a CTQ with a measurable metric and a target. | Lead with customer voice |\n\n**Done when:** the customer, the main benefit, the headline and at least one CTQ metric are filled in.\n\n[[go:customer]]\n\n### 5.3 Stage 2: Make the case (funding gate)\n\n| Step | Action | Who |\n|---|---|---|\n| 1 | Choose the purpose: **Fix a problem** or **Create something new**. | Lead |\n| 2 | Pick the customer need from your CTQs. If there is none, stop and go back to stage 1. | Lead |\n| 3 | Write a goal with a number and a date: from X to Y by when. Set the deadline. | Lead with sponsor |\n| 4 | Name the sponsor, the lead and the team. Include people who do the work. | Sponsor |\n| 5 | Record the evidence and estimate the yearly cost of the problem (or the opportunity), the expected yearly benefit and the cost to fund. Show your working. | Lead with finance partner |\n| 6 | Plan the pilot (stage 7) before asking for full funding. | Lead |\n| 7 | Review the nine gate checks. Fix every red cross. | Lead |\n| 8 | Sponsor decides: fund, fund the pilot only, or stop. | Sponsor |\n\n**Done when:** all nine checks pass and the gate shows **Ready to fund**.\n\n[[go:case]]\n\n### 5.4 Stage 3: Map the value stream\n\n| Step | Action | Who |\n|---|---|---|\n| 1 | Walk the process where the work happens. Record it as it is done today, not as the procedure says. | Team |\n| 2 | Add each step with its owner, the wait before it, the work time and the defect rate. Use minutes (1 day = 1440). | Team |\n| 3 | Classify each step as VA, NNVA or NVA from the customer's point of view. | Team |\n| 4 | Rate people, resources and systems for each step in the harmony check: tick if they support the value, cross if they create friction or excess. | Team |\n| 5 | Read the metrics strip: lead time, value-add time, PCE and yield. | Lead |\n\n**Done when:** at least three steps are mapped and every step has a name.\n\n[[go:map]]\n\n### 5.5 Stage 4: Hunt the waste\n\n| Step | Action | Who |\n|---|---|---|\n| 1 | Go through every step and mark each of the 8 wastes you see in the waste walk matrix. | Team |\n| 2 | Look specifically for over-planning, over-staffing, idle resources and signs of disengagement. | Team |\n| 3 | For each important waste, add a finding with the facts and numbers. | Team |\n| 4 | Climb the \"So what?\" ladder until you reach the impact on the customer or the business. | Team |\n| 5 | Estimate the yearly cost and say how it is mainly paid: money, time, people and engagement, customers or quality risk. | Lead with finance partner |\n| 6 | Send the findings worth fixing to the 5 Whys with **Send to 5 Whys**. | Lead |\n\n**Done when:** at least one finding has a customer or business impact.\n\n[[go:waste]]\n\n### 5.6 Stage 5: Find root causes\n\n| Step | Action | Who |\n|---|---|---|\n| 1 | Write the problem statement: what, where, when and how much. No cause and no blame. | Lead |\n| 2 | Ask \"Why?\" and write the answer. Ask \"Why?\" of that answer. Repeat until you reach something a process change can fix. | Team |\n| 3 | Check the **therefore test**. If a link does not make sense, add the missing step. | Team |\n| 4 | Write the root cause and choose its 6M category. | Team |\n| 5 | Verify the root cause with data or direct observation, then tick **verified**. | Lead |\n\n**Done when:** at least one root cause is written and verified.\n\n[[go:why]]\n\n### 5.7 Stage 6: Design countermeasures\n\n| Step | Action | Who |\n|---|---|---|\n| 1 | From each verified root cause, click **Create countermeasure**. | Lead |\n| 2 | Try ECRS in order: can you eliminate the step before combining, rearranging or simplifying it? | Team |\n| 3 | Where errors happen, design error-proofing (poka-yoke) so the mistake cannot be made. | Team |\n| 4 | Score impact and effort from 1 to 5. Start with quick wins. | Team |\n| 5 | Give every countermeasure an owner and a due date. | Lead |\n| 6 | Track each one through Plan, Do, Check, Act and Done. | Owner |\n\n**Done when:** at least one countermeasure has an owner.\n\n[[go:improve]]\n\n### 5.8 Stage 7: Pilot before scaling\n\n| Step | Action | Who |\n|---|---|---|\n| 1 | Write the hypothesis: if we change X, then measure Y moves from A to B, because of root cause Z. | Lead |\n| 2 | Keep the scope small and keep a comparison group on the current process. Set start and end dates. | Lead with sponsor |\n| 3 | Before starting, set the success thresholds and the stop criteria. Do not change them during the pilot. | Lead with sponsor |\n| 4 | Run the pilot. Stop at once if a stop criterion is hit. | Team |\n| 5 | Record the results against each threshold. | Lead |\n| 6 | Decide: **Scale it**, **Adjust and re-pilot**, or **Stop**. Write what you learned. | Sponsor |\n\n**Done when:** a decision is recorded and at least one result is filled in.\n\n[[go:pilot]]\n\n### 5.9 Stage 8: Sustain the gains\n\n| Step | Action | Who |\n|---|---|---|\n| 1 | Click **Add KPIs from CTQs** and fill in baseline, target and current values. | Lead |\n| 2 | Write the new standard work as numbered steps anyone could follow. Train the team on it. | Lead with team |\n| 3 | Write the reaction plan: if a measure drifts, who does what, by when. | Lead |\n| 4 | Set the review cadence and name the long-term process owner. | Sponsor |\n| 5 | Click **Export A3** and share the one-page report with the sponsor. | Lead |\n\n**Done when:** at least one KPI has a current value and the standard work is written.\n\n[[go:sustain]]\n\n### 5.10 Rhythm at a glance\n\n| When | What | Who |\n|---|---|---|\n| Week 1 | Stages 1 and 2, then the funding gate decision | Lead, sponsor, finance partner |\n| Weeks 2 to 3 | Stages 3 to 5: walk the process, hunt waste, find root causes | Team |\n| Week 4 | Stage 6: countermeasures and pilot plan | Team, sponsor |\n| Weeks 5 to 8 | Stage 7: run the pilot, then decide | Team, sponsor |\n| Every week | 15-minute huddle on countermeasure status and pilot results | Team |\n| Every month after | KPI review against the control plan | Process owner |\n| Every 6 months | Review standard work and this SOP | Process owner |\n\n### 5.11 Responding to signals\n\n| Signal in the app | What it means | What to do |\n|---|---|---|\n| **Zombie risk** at the funding gate | No customer need, measurable goal or deadline | Fix these within one week or stop the project. |\n| Red cross at the funding gate | A gate check is not met | Do not fund until it is fixed. A pilot may be funded on its own if the sponsor agrees. |\n| **PCE** in red (under 5%) | Most of the lead time is waiting | Focus on wait time between steps before speeding up any step. |\n| **Yield** in red (under 80%) | Too much work is not right first time | Look for Defects and their root causes first. |\n| High **cost of waste** | Waste is costing a lot every year | Prioritise the findings with the highest cost and customer impact. |\n| Harmony under 50% | People, resources or systems are working against the value | Fix the friction before adding more people or budget. |\n| Stop criterion hit in a pilot | The change is causing harm | Stop the pilot the same day and tell the sponsor. |\n| KPI drifting from target | The process is sliding back | Follow the reaction plan and run a new 5 Whys. |\n\n## 6. Records\n\n- Projects are saved only in the browser on the computer where they were made. Click **Back up** at least once a week and after every review, and keep the file somewhere that is itself backed up.\n- To move projects to another computer, click **Back up** on the first one and **Restore** on the other.\n\n- The **A3 report** (Export A3) is the official record of each project. Share it with the sponsor at the funding gate, at the pilot decision and at close.\n- Keep the evidence behind the cost and benefit numbers where your finance partner can check it.\n\n## 7. Privacy and appropriate use\n\n- Projects never leave the browser. There is no account, no server and no tracking.\n- Clearing browser data deletes projects, so keep backups.\n- Full details are under **Privacy** at the top of the app.\n\n- Do not enter personal data about customers or employees, such as names, contact details or health information. Describe processes and use numbers.\n- Findings describe processes, not people. Do not use the app to rate or discipline individuals.\n\n## 8. Troubleshooting\n\n| Problem | Fix |\n|---|---|\n| A stage has no green dot | Check that stage's \"Done when\" in section 5. |\n| The funding gate shows a cross for \"Measurable goal\" | The goal must contain a number, for example \"from 4.2 to 1 day\". |\n| The benefit check fails | Expected benefit must be higher than the cost to fund, and both must be filled in. |\n| \"Create countermeasure\" does not link to the root cause | Write the root cause first, then create the countermeasure. |\n| A waste finding has no step to choose | Add process steps in stage 3 first. |\n| Lead time looks wrong | Times are in minutes. One day is 1440 minutes. |\n| My projects disappeared | Browser data was cleared, or you are in a private window or another browser. Click **Restore** and choose your latest backup file. |\n| I need my projects on another computer | Click **Back up** on the first computer and **Restore** on the other. |\n\n## 9. Foundations\n\nThe app combines methods with a long record in process improvement, quality and innovation:\n\n| Method | Source | Used in |\n|---|---|---|\n| Working Backwards (PR/FAQ) | Amazon | Stage 1 |\n| Critical-to-quality tree, DMAIC | Six Sigma (Motorola, then GE) | Stages 1 and 8 |\n| Stage-gate funding | Robert G. Cooper | Stage 2 |\n| Value stream mapping | Toyota; *Learning to See*, Rother and Shook (1999) | Stage 3 |\n| The wastes (muda) | Taiichi Ohno, Toyota Production System | Stage 4 |\n| 5 Whys | Sakichi Toyoda, Toyota | Stage 5 |\n| Fishbone diagram (6M) | Kaoru Ishikawa | Stage 5 |\n| ECRS and poka-yoke | Industrial engineering; Shigeo Shingo | Stage 6 |\n| Plan-Do-Check-Act | W. Edwards Deming (from Walter Shewhart) | Stages 6 and 7 |\n| Build-measure-learn, validated learning | *The Lean Startup*, Eric Ries (2011) | Stage 7 |\n| Kaizen (continuous improvement) and standard work | Toyota; Masaaki Imai (1986) | Stage 8 |\n| A3 report | Toyota | Export |\n\n## 10. Revision history\n\n| Version | Date | Change |\n|---|---|---|\n| 1.0 | 25 October 2026 | First release. |\n";
+function mdInline(t){return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>')}
+function slug(t){return 'sop-'+t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function mdRender(src){const L=src.split('\n');let h='',i=0,m;
+  const cells=r=>r.trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim());
+  while(i<L.length){const l=L[i];
+    if(!l.trim()){i++;continue}
+    if((m=l.match(/^\[\[go:(\w+)\]\]$/))){const st=STAGES.find(x=>x.k===m[1]);h+=`<p class="go"><button class="btn small" data-act="go" data-k="${m[1]}">Open "${esc(st.t)}" in the workbench →</button></p>`;i++;continue}
+    if((m=l.match(/^(#{1,3}) (.*)/))){const n=m[1].length+1;h+=`<h${n} id="${slug(m[2])}">${mdInline(m[2])}</h${n}>`;i++;continue}
+    if(l.trim()==='---'){i++;continue}
+    if(l.startsWith('|')){const rows=[];while(i<L.length&&L[i].startsWith('|'))rows.push(L[i++]);
+      const head=cells(rows[0]),body=rows.slice(2).map(cells);
+      h+='<div class="tbl"><table>'+(head.every(c=>!c)?'':'<thead><tr>'+head.map(c=>`<th>${mdInline(c)}</th>`).join('')+'</tr></thead>')+'<tbody>'+body.map(r=>'<tr>'+r.map(c=>`<td>${mdInline(c)}</td>`).join('')+'</tr>').join('')+'</tbody></table></div>';continue}
+    if(/^- /.test(l)){h+='<ul>';while(i<L.length&&/^- /.test(L[i]))h+='<li>'+mdInline(L[i++].slice(2))+'</li>';h+='</ul>';continue}
+    if(/^\d+\. /.test(l)){h+='<ol>';while(i<L.length&&/^\d+\. /.test(L[i]))h+='<li>'+mdInline(L[i++].replace(/^\d+\. /,''))+'</li>';h+='</ol>';continue}
+    const p=[];while(i<L.length&&L[i].trim()&&!/^(#|\||- |\d+\. |\[\[|---)/.test(L[i]))p.push(L[i++]);h+='<p>'+mdInline(p.join(' '))+'</p>'}
+  return h}
+function renderSop(){const toc=SOP_MD.split('\n').filter(l=>/^## /.test(l)).map(l=>l.slice(3));
+  $('#sopView').innerHTML=`<div class="sopgrid"><nav class="toc" aria-label="SOP sections"><span class="eyebrow">Contents</span>${toc.map(t=>`<button data-act="toc" data-id="${slug(t)}">${esc(t)}</button>`).join('')}</nav><article class="doc">${mdRender(SOP_MD)}</article></div>`}
+let view='work';
+function setView(v){view=v;$('#workView').hidden=v!=='work';$('#sopView').hidden=v!=='sop';
+  if(v==='sop'&&!$('#sopView').innerHTML)renderSop();
+  document.querySelectorAll('.tab[data-v]').forEach(t=>t.setAttribute('aria-pressed',String(t.dataset.v===v)));window.scrollTo({top:0})}
+
 /* ---------- boot ---------- */
 lsLoad();
 if(!cur){const p=exampleProject();projects[p.id]=p;cur=p}
 if(!R[stage])stage='customer';
 renderAll();setSave(cur.example?'Example project. Edit anything, or start a new project.':'');
+if(location.hash==='#sop')setView('sop');
 initCaps();
 </script>
 

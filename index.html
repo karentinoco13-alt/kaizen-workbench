@@ -266,6 +266,38 @@ td.num input{width:84px;text-align:right;font-family:var(--f-mono)}
 .doc hr{border:0;border-top:1px solid var(--line);margin:20px 0}
 .doc .go{margin:6px 0 4px}
 @media (max-width:860px){.sopgrid{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+/* color pass: brand carried through the page */
+:root{--ph-define:#1F4E9C;--ph-measure:#0E7490;--ph-analyze:#B07A12;--ph-improve:#2F7D4F;--ph-control:#0F2347;--ph:var(--ph-define)}
+.ph-define{--ph:var(--ph-define)} .ph-measure{--ph:var(--ph-measure)} .ph-analyze{--ph:var(--ph-analyze)} .ph-improve{--ph:var(--ph-improve)} .ph-control{--ph:var(--ph-control)}
+.pill{background:var(--gold-soft);color:var(--amber)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#0F1E3D}
+.btn.gold:hover{border-color:var(--amber)}
+th{background:var(--navy-2);color:#F4F6FB;border-bottom-color:var(--navy-2)}
+/* metrics strip as a navy band */
+.strip{background:var(--navy);border-color:var(--navy-2)}
+.strip .metric{border-color:rgb(255 255 255 / .12)!important}
+.strip .metric .v{color:#FFFFFF}
+.strip .metric .l{color:var(--on-navy-muted)}
+.strip .metric.bad .v{color:#F2827A} .strip .metric.warn .v{color:#E6BE52} .strip .metric.good .v{color:#6FD08F}
+/* stage list as a navy panel */
+.rail{background:var(--navy);border:1px solid var(--navy-2);border-top:3px solid var(--gold);border-radius:var(--r);padding:10px 8px}
+.rail .phase{color:var(--gold)}
+.rail button{color:var(--on-navy)}
+.rail button:hover{background:var(--navy-2)}
+.rail button[aria-current="step"]{background:var(--navy-2)}
+.rail .n{background:var(--ph);color:#FFFFFF;border:1px solid rgb(255 255 255 / .25);border-radius:4px;text-align:center;padding:1px 0;font-size:.74rem}
+.rail .m{color:var(--on-navy-muted)}
+.rail .dot{border-color:rgb(255 255 255 / .35)}
+.rail .dot.done{background:#6FD08F;border-color:#6FD08F}
+/* stage banner in the phase colour */
+.shead{background:var(--ph);color:#FFFFFF;border-radius:var(--r);padding:20px 22px;border-bottom:3px solid var(--gold);gap:8px}
+.shead .eyebrow{color:#F7E3A6}
+.shead h2{color:#FFFFFF}
+.shead .lede{color:rgb(255 255 255 / .88)}
+.shead .pill{background:rgb(255 255 255 / .16);color:#FFFFFF}
+.stage .panel{border-top:3px solid var(--ph)}
+.stage .panel h3{color:var(--ink)}
+.doc h3{color:var(--accent)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:var(--r);font-size:.86rem;z-index:20}
 @media (prefers-reduced-motion:no-preference){.stage{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}}
 </style>
@@ -287,8 +319,8 @@ td.num input{width:84px;text-align:right;font-family:var(--f-mono)}
     <div class="projbar">
       <label for="projSel" class="eyebrow">Project</label>
       <select id="projSel"></select>
-      <button class="btn" data-act="newProject">+ New project</button>
-      <button class="btn" data-act="exportA3">Export A3</button>
+      <button class="btn primary" data-act="newProject">+ New project</button>
+      <button class="btn gold" data-act="exportA3">Export A3</button>
       <button class="btn ghost small" data-act="backup">Back up</button>
       <button class="btn ghost small" data-act="restore">Restore</button>
       <input type="file" id="restoreFile" accept=".json,application/json" hidden>
@@ -517,7 +549,7 @@ function renderStrip(){
 function renderRail(){
   let last='';
   $('#rail').innerHTML=STAGES.map((s,i)=>{const ph=s.phase!==last?`<div class="phase">${s.phase}</div>`:'';last=s.phase;
-    return ph+`<button data-act="go" data-k="${s.k}" ${stage===s.k?'aria-current="step"':''}><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${s.t}<span class="m">${s.m}</span></span><span class="dot ${stageDone(cur,s.k)?'done':''}" title="${stageDone(cur,s.k)?'Complete':'In progress'}"></span></button>`}).join('');
+    return ph+`<button class="ph-${s.phase.toLowerCase()}" data-act="go" data-k="${s.k}" ${stage===s.k?'aria-current="step"':''}><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${s.t}<span class="m">${s.m}</span></span><span class="dot ${stageDone(cur,s.k)?'done':''}" title="${stageDone(cur,s.k)?'Complete':'In progress'}"></span></button>`}).join('');
 }
 
 /* ---------- field helpers ---------- */
@@ -532,7 +564,7 @@ function sel(path,opts,label){const v=getPath(cur,path)??'';const id=fid(path);
   const s=`<select id="${id}" data-path="${path}" data-rerender="1">${opts.map(([k,n])=>`<option value="${esc(k)}"${String(k)===String(v)?' selected':''}>${esc(n)}</option>`).join('')}</select>`;
   return label?`<div class="field"><label for="${id}">${esc(label)}</label>${s}</div>`:s}
 function stageHead(k,lede,methods){const i=STAGES.findIndex(x=>x.k===k),s=STAGES[i];
-  return`<div class="shead"><div class="eyebrow">Stage ${i+1} of ${STAGES.length} · ${s.phase}</div><h2>${s.t}</h2><p class="lede">${lede}</p><div class="method">${methods.map(m=>`<span class="pill">${esc(m)}</span>`).join('')}</div></div>`}
+  return`<div class="shead ph-${s.phase.toLowerCase()}"><div class="eyebrow">Stage ${i+1} of ${STAGES.length} · ${s.phase}</div><h2>${s.t}</h2><p class="lede">${lede}</p><div class="method">${methods.map(m=>`<span class="pill">${esc(m)}</span>`).join('')}</div></div>`}
 function coachBox(){
   if(!sampleFn)return'';
   return`<div class="coach" id="coach"><div class="ph"><div><h3>Ask the coach</h3><p class="muted" style="font-size:.84rem">A lean six sigma coach reviews this stage and challenges weak spots.</p><p class="note">Clicking sends this project's contents to Claude. The answer is shown here and not saved. <button class="linkbtn" data-act="privacy">Privacy &amp; security</button></p></div><button class="btn primary" data-act="coach">Review this stage</button></div><div class="out" id="coachOut" hidden></div></div>`}
@@ -685,7 +717,7 @@ function rPilot(){const p=cur.pilot;
    <div class="seg" role="group" aria-label="Pilot decision">${['Scale','Adjust','Stop'].map(k=>`<button data-act="decide" data-s="${k}" aria-pressed="${p.decision===k}">${{Scale:'Scale it',Adjust:'Adjust and re-pilot',Stop:'Stop'}[k]}</button>`).join('')}</div>
    ${input('pilot.learnings',{label:'What we learned',rows:3})}</section>`+coachBox()}
 const R={case:rCase,pilot:rPilot,customer:rCustomer,map:rMap,waste:rWaste,why:rWhy,improve:rImprove,sustain:rSustain};
-function renderStage(){const y=window.scrollY;$('#stage').innerHTML=R[stage]();window.scrollTo(0,y)}
+function renderStage(){const y=window.scrollY;$('#stage').className='stage ph-'+STAGES.find(x=>x.k===stage).phase.toLowerCase();$('#stage').innerHTML=R[stage]();window.scrollTo(0,y)}
 
 /* ---------- live updates without losing focus ---------- */
 function liveRefresh(path){

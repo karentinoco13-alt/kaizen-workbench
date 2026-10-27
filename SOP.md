@@ -235,7 +235,7 @@ Work through the stages in order. Each stage has a green dot in the stage list w
 - Do not enter personal data about customers or employees, such as names, contact details or health information. Describe processes and use numbers.
 - Findings describe processes, not people. Do not use the app to rate or discipline individuals.
 - **No guarantee of results.** Every plan is unique to the person, manager and company that create it and depends on the data they enter. The app does not guarantee any result without proper monitoring of the whole journey and of all the data relevant to it.
-- **Deleting data.** Deleting a project shows two warnings and asks you to accept that you alone are responsible for the loss. Neither the app nor its developer can recover deleted data or accept responsibility for it.
+- **Deleting data.** Deleting a project, or using **Delete all my data** in Privacy, shows two warnings and asks you to accept that you alone are responsible for the loss. Neither the app nor its developer can recover deleted data or accept responsibility for it.
 - Full details are in **Terms of use**, at the bottom of every page.
 
 ## 8. Troubleshooting

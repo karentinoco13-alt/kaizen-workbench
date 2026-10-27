@@ -56,6 +56,7 @@ Your projects never leave your browser. There is no account, no server and no tr
 ## Terms, deleting data and feedback
 
 - **Terms of use** are linked at the bottom of every page. Every plan is unique to the person, manager and company that create it and depends on the data entered, so the app does not guarantee any result without proper monitoring of the whole journey and of all the data relevant to it. Every exported A3 ends with the same reminder.
+- **Delete all my data** (in Privacy) removes every project and saved setting at once, with the same two warnings.
 - **Deleting a project takes two warnings.** The first offers a backup. The second asks the person to accept that they alone are responsible for the loss, releasing the app and its developer and giving up any claim over lost data. The delete button stays disabled until they tick that box.
 - **Feedback** has its own tab. It prepares a GitHub issue that the person reviews and posts, or they can copy it and send it another way. Feedback is used to plan future versions.
 

@@ -235,7 +235,7 @@ Avanza por las etapas en orden. Cada etapa muestra un punto verde en la lista de
 - No captures datos personales de clientes ni de colaboradores, como nombres, datos de contacto o información de salud. Describe procesos y usa cifras.
 - Los hallazgos describen procesos, no personas. No uses la app para calificar ni sancionar a nadie.
 - **Sin garantía de resultados.** Cada plan es único para la persona, el líder y la empresa que lo crean, y depende de los datos que capturan. La app no garantiza ningún resultado sin un seguimiento adecuado de todo el proceso y de todos los datos relacionados.
-- **Eliminar datos.** Al eliminar un proyecto aparecen dos advertencias y se te pide aceptar que eres la única persona responsable de la pérdida. Ni la app ni quien la desarrolló pueden recuperar los datos eliminados ni hacerse responsables de ellos.
+- **Eliminar datos.** Al eliminar un proyecto, o usar **Borrar todos mis datos** en Privacidad, aparecen dos advertencias y se te pide aceptar que eres la única persona responsable de la pérdida. Ni la app ni quien la desarrolló pueden recuperar los datos eliminados ni hacerse responsables de ellos.
 - Todos los detalles están en **Términos de uso**, al pie de cada página.
 
 ## 8. Solución de problemas

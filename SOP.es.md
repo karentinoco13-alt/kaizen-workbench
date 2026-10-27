@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Documento** | POE: Uso de Kaizen Workbench para mejorar procesos y financiar el trabajo de mejora |
-| **Versión** | 1.0 |
-| **Fecha de vigencia** | 25 de octubre de 2026 |
+| **Versión** | 1.1 |
+| **Fecha de vigencia** | 27 de octubre de 2026 |
 | **Aplica a** | Líderes, responsables de procesos, patrocinadores de proyectos y miembros de equipos de mejora |
 | **Revisión** | Cada 6 meses, o cuando cambie la app |
 
@@ -224,6 +224,7 @@ Avanza por las etapas en orden. Cada etapa muestra un punto verde en la lista de
 
 - El **reporte A3** (Exportar A3) es el registro oficial de cada proyecto. Compártelo con el patrocinador en el filtro de financiamiento, en la decisión del piloto y al cierre.
 - Guarda la evidencia de las cifras de costo y beneficio donde tu socio de finanzas la pueda revisar.
+- Envía ideas, problemas y solicitudes desde la pestaña **Comentarios**. Los comentarios se revisan y se usan para planear las próximas versiones.
 
 ## 7. Privacidad y uso apropiado
 
@@ -233,6 +234,9 @@ Avanza por las etapas en orden. Cada etapa muestra un punto verde en la lista de
 
 - No captures datos personales de clientes ni de colaboradores, como nombres, datos de contacto o información de salud. Describe procesos y usa cifras.
 - Los hallazgos describen procesos, no personas. No uses la app para calificar ni sancionar a nadie.
+- **Sin garantía de resultados.** Cada plan es único para la persona, el líder y la empresa que lo crean, y depende de los datos que capturan. La app no garantiza ningún resultado sin un seguimiento adecuado de todo el proceso y de todos los datos relacionados.
+- **Eliminar datos.** Al eliminar un proyecto aparecen dos advertencias y se te pide aceptar que eres la única persona responsable de la pérdida. Ni la app ni quien la desarrolló pueden recuperar los datos eliminados ni hacerse responsables de ellos.
+- Todos los detalles están en **Términos de uso**, al pie de cada página.
 
 ## 8. Solución de problemas
 
@@ -271,3 +275,4 @@ La app combina métodos con una larga trayectoria en mejora de procesos, calidad
 | Versión | Fecha | Cambio |
 |---|---|---|
 | 1.0 | 25 de octubre de 2026 | Primera versión. |
+| 1.1 | 27 de octubre de 2026 | Se agregaron el español, los términos de uso, la advertencia de eliminación en dos pasos y la pestaña Comentarios. |

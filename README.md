@@ -53,6 +53,12 @@ The whole app works in English and Spanish. Use the **EN | ES** switch in the he
 
 Your projects never leave your browser. There is no account, no server and no tracking. Work saves automatically in the browser's local storage on your computer. Use **Back up** to save a copy as a file and **Restore** to load it elsewhere. The **Privacy** tab in the app explains this in full.
 
+## Terms, deleting data and feedback
+
+- **Terms of use** are linked at the bottom of every page. Every plan is unique to the person, manager and company that create it and depends on the data entered, so the app does not guarantee any result without proper monitoring of the whole journey and of all the data relevant to it. Every exported A3 ends with the same reminder.
+- **Deleting a project takes two warnings.** The first offers a backup. The second asks the person to accept that they alone are responsible for the loss, releasing the app and its developer and giving up any claim over lost data. The delete button stays disabled until they tick that box.
+- **Feedback** has its own tab. It prepares a GitHub issue that the person reviews and posts, or they can copy it and send it another way. Feedback is used to plan future versions.
+
 ## Tech
 
 One self-contained HTML file with plain JavaScript and CSS, in a navy and gold brand shared with my other apps. No framework, no build step and no dependencies apart from Google Fonts. It works on desktop and mobile, in light and dark mode. Hosted on GitHub Pages.

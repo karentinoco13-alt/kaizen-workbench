@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | SOP: Using Kaizen Workbench to improve processes and fund improvement work |
-| **Version** | 1.0 |
-| **Effective date** | 25 October 2026 |
+| **Version** | 1.1 |
+| **Effective date** | 27 October 2026 |
 | **Applies to** | Managers, process owners, project sponsors and improvement team members |
 | **Review cycle** | Every 6 months, or when the app changes |
 
@@ -224,6 +224,7 @@ Work through the stages in order. Each stage has a green dot in the stage list w
 
 - The **A3 report** (Export A3) is the official record of each project. Share it with the sponsor at the funding gate, at the pilot decision and at close.
 - Keep the evidence behind the cost and benefit numbers where your finance partner can check it.
+- Send ideas, problems and requests through the **Feedback** tab. Feedback is reviewed and used to plan future versions.
 
 ## 7. Privacy and appropriate use
 
@@ -233,6 +234,9 @@ Work through the stages in order. Each stage has a green dot in the stage list w
 
 - Do not enter personal data about customers or employees, such as names, contact details or health information. Describe processes and use numbers.
 - Findings describe processes, not people. Do not use the app to rate or discipline individuals.
+- **No guarantee of results.** Every plan is unique to the person, manager and company that create it and depends on the data they enter. The app does not guarantee any result without proper monitoring of the whole journey and of all the data relevant to it.
+- **Deleting data.** Deleting a project shows two warnings and asks you to accept that you alone are responsible for the loss. Neither the app nor its developer can recover deleted data or accept responsibility for it.
+- Full details are in **Terms of use**, at the bottom of every page.
 
 ## 8. Troubleshooting
 
@@ -271,3 +275,4 @@ The app combines methods with a long record in process improvement, quality and 
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 25 October 2026 | First release. |
+| 1.1 | 27 October 2026 | Added Spanish, terms of use, a two-step delete warning and the Feedback tab. |

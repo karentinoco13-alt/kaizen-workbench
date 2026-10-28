@@ -71,3 +71,9 @@ To run it locally, download `index.html` and open it in a browser.
 - Shared team workspace with sign-in
 - Portfolio view of every project's funding gate status and cost of waste
 - AI coach that reviews each stage and challenges weak reasoning
+
+## License
+
+Required Notice: Copyright (c) 2026 Karen Tinoco (https://www.thehumanelement.live)
+
+Kaizen Workbench by Karen Tinoco · © 2026 Karen Tinoco. Licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE.md): free to use, share and adapt for non-commercial purposes, with credit. Commercial use by permission only.

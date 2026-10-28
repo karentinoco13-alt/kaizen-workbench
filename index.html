@@ -615,6 +615,7 @@ tbody tr:hover>td{background:color-mix(in srgb,var(--st) var(--tC),var(--surface
 
 <dialog id="termsDlg" class="dlg" aria-labelledby="termsTitle">
   <h2 id="termsTitle" tabindex="-1" autofocus style="outline:none">Terms of use</h2>
+  <p class="now" id="termsAccepted" hidden><span data-lang="en"></span><span data-lang="es"></span></p>
   <div data-lang="en">
   <p class="lede">By using Kaizen Workbench you accept these terms. Last updated 27 October 2026.</p>
   <h3>1. A planning aid, not a guarantee</h3>
@@ -649,6 +650,28 @@ tbody tr:hover>td{background:color-mix(in srgb,var(--st) var(--tC),var(--surface
   </div>
   <form method="dialog"><button class="btn primary">Close</button></form>
 </dialog>
+<!-- kz-gate:start -->
+<dialog id="gateDlg" class="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-describedby="gateLede">
+ <div class="gate-in">
+  <div class="gate-top">
+   <div class="gate-brand"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="var(--gold)" stroke-width="2.5"/><path d="M10 28h6v-5h6v-5h6v-9" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M24.5 12.5L28 9l3.5 3.5" fill="none" stroke="#F4F6FB" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg><span>Kaizen Workbench</span></div>
+   <div class="lang" role="group" aria-label="Language / Idioma"><button type="button" data-act="lang" data-l="en" aria-pressed="true" title="English">EN</button><button type="button" data-act="lang" data-l="es" aria-pressed="false" title="Español">ES</button></div>
+  </div>
+  <div class="gate-card" id="gateMain">
+   <h2 id="gateTitle" tabindex="-1"><span data-lang="en">Before you start: Terms of use</span><span data-lang="es">Antes de empezar: Términos de uso</span></h2>
+   <p class="gate-lede" id="gateLede"><span data-lang="en">Please read this summary of the Terms of use. You need to accept them before you can use the app.</span><span data-lang="es">Lee este resumen de los Términos de uso. Necesitas aceptarlos antes de usar la app.</span></p>
+   <div class="gate-sum" tabindex="0" role="region" aria-label="Summary / Resumen"><ul><li><span data-lang="en"><b>A planning aid, not a guarantee.</b> Every plan is unique to the person, manager and company that create it, and it depends entirely on the data they enter. The app and its developer do not guarantee any result, saving or success.</span><span data-lang="es"><b>Una herramienta de apoyo, no una garantía.</b> Cada plan es único para la persona, el líder y la empresa que lo crean, y depende por completo de los datos que capturan. La app y quien la desarrolló no garantizan ningún resultado, ahorro ni éxito.</span></li><li><span data-lang="en"><b>Your decisions.</b> You are responsible for the data you enter, for checking the figures the app calculates (such as cost of waste, benefit and payback), and for any decision you make with them.</span><span data-lang="es"><b>Tus decisiones.</b> Eres responsable de los datos que capturas, de revisar las cifras que calcula la app (como el costo del desperdicio, el beneficio y la recuperación) y de cualquier decisión que tomes con ellas.</span></li><li><span data-lang="en"><b>Your data stays in this browser.</b> Your projects are saved only in this browser on this device. There is no copy on any server. You are responsible for keeping your own backups.</span><span data-lang="es"><b>Tus datos se quedan en este navegador.</b> Tus proyectos se guardan solo en este navegador, en este dispositivo. No hay ninguna copia en un servidor. Eres responsable de guardar tus propios respaldos.</span></li><li><span data-lang="en"><b>Deleting is permanent.</b> Deleting a project, or clearing your browser data, erases it permanently. The app and its developer are not responsible for any loss of data. By using the app you agree not to make any claim or take legal action against them for lost data.</span><span data-lang="es"><b>Eliminar es permanente.</b> Eliminar un proyecto, o borrar los datos del navegador, lo borra para siempre. La app y quien la desarrolló no son responsables de ninguna pérdida de datos. Al usar la app aceptas no presentar ningún reclamo ni emprender acciones legales en su contra por la pérdida de datos.</span></li><li><span data-lang="en"><b>Provided as is.</b> The app is provided "as is" and "as available", without warranties of any kind. To the extent the law allows, its developer is not liable for any direct or indirect loss arising from its use.</span><span data-lang="es"><b>Se ofrece tal cual.</b> La app se ofrece "tal cual" y "según disponibilidad", sin garantías de ningún tipo. En la medida en que la ley lo permita, quien la desarrolló no es responsable de ninguna pérdida directa o indirecta derivada de su uso.</span></li><li><span data-lang="en"><b>Feedback.</b> Ideas and comments you send may be used to improve future versions of the app, without any obligation or payment.</span><span data-lang="es"><b>Comentarios.</b> Las ideas y comentarios que envíes pueden usarse para mejorar las próximas versiones de la app, sin ninguna obligación ni pago.</span></li></ul></div>
+   <div class="gate-links"><button type="button" class="btn small" data-act="terms"><span data-lang="en">Read the full Terms of use</span><span data-lang="es">Leer los Términos de uso completos</span></button><button type="button" class="btn small" data-act="privacy"><span data-lang="en">Privacy &amp; security</span><span data-lang="es">Privacidad y seguridad</span></button></div>
+   <label class="gate-ack"><input type="checkbox" id="gateAck"><span><span data-lang="en">I have read and accept the Terms of use and the Privacy &amp; security notice</span><span data-lang="es">He leído y acepto los Términos de uso y el Aviso de privacidad y seguridad</span></span></label>
+   <div class="gate-acts"><button type="button" class="btn" data-gate="decline"><span data-lang="en">Decline</span><span data-lang="es">No acepto</span></button><button type="button" class="btn primary" id="gateGo" data-gate="accept" disabled><span data-lang="en">Accept and continue</span><span data-lang="es">Aceptar y continuar</span></button></div>
+  </div>
+  <div class="gate-card gate-no" id="gateDeclined" hidden>
+   <h2 id="gateNoTitle" tabindex="-1"><span data-lang="en">You need to accept the terms to use the app</span><span data-lang="es">Necesitas aceptar los términos para usar la app</span></h2>
+   <div class="gate-acts"><button type="button" class="btn primary" data-gate="review"><span data-lang="en">Review again</span><span data-lang="es">Volver a revisar</span></button></div>
+  </div>
+ </div>
+</dialog>
+<!-- kz-gate:end -->
 <dialog id="delDlg" class="dlg" aria-labelledby="delTitle"></dialog>
 
 <script>
@@ -1480,6 +1503,67 @@ if(/^#feedback(-es|-en)?$/.test(location.hash))setView('feedback');
 initCaps();
 </script>
 
+<style id="kz-gate-css">
+/* first-use terms gate */
+.gate{--st:#6D28D9;--st-on:#FFFFFF;--st-ink-l:#6125C2;position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;overflow:auto;color:var(--ink);
+  background-color:color-mix(in srgb,var(--st) 8%,var(--bg));background-image:radial-gradient(900px 500px at 0 0,color-mix(in srgb,var(--st) 18%,transparent),transparent 70%),radial-gradient(800px 500px at 100% 100%,color-mix(in srgb,var(--gold) 20%,transparent),transparent 70%)}
+.gate::backdrop{background:var(--navy)}
+.gate-in{max-width:760px;min-height:100%;margin:0 auto;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;justify-content:center;gap:14px}
+.gate-top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:var(--navy);color:#F4F6FB;border-bottom:3px solid var(--gold);border-radius:var(--r);padding:10px 14px}
+.gate-brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:1.2rem}
+.gate-brand .logo{width:32px;height:32px;flex:0 0 32px}
+.gate-card{background:color-mix(in srgb,var(--st) 4%,var(--surface));border:1px solid color-mix(in srgb,var(--st) 35%,var(--line));border-top:7px solid var(--st);border-radius:var(--r);padding:0 clamp(16px,4vw,28px) 20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 12px 30px -18px color-mix(in srgb,var(--st) 80%,transparent)}
+.gate-card h2{background:var(--st);color:var(--st-on);margin:0 calc(-1 * clamp(16px,4vw,28px));padding:16px clamp(16px,4vw,28px);border-bottom:4px solid var(--gold);font-size:clamp(1.35rem,4vw,1.7rem);outline:none}
+.gate-no h2{background:var(--nva)}
+.gate-lede{font-size:1rem;max-width:68ch}
+.gate-sum{max-height:min(42vh,380px);overflow:auto;background:var(--surface);border:1px solid color-mix(in srgb,var(--st) 35%,var(--line));border-left:6px solid var(--st);border-radius:var(--r);padding:4px 16px 4px 8px}
+.gate-sum ul{margin:8px 0;padding-left:22px;display:flex;flex-direction:column;gap:9px;font-size:.93rem}
+.gate-sum li::marker{color:var(--st)}
+.gate-sum b{color:var(--st-ink)}
+.gate-links{display:flex;flex-wrap:wrap;gap:8px}
+.gate .btn:not(.primary){background:color-mix(in srgb,var(--st) 10%,var(--surface));border-color:color-mix(in srgb,var(--st) 55%,var(--line));color:var(--st-ink)}
+.gate .btn:not(.primary):hover{background:var(--st);color:var(--st-on)}
+.gate-ack{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--gold);background:color-mix(in srgb,var(--gold) 16%,var(--surface));border-radius:var(--r);font-weight:600;cursor:pointer}
+.gate-ack input{width:20px;height:20px;margin-top:2px;flex:0 0 auto;accent-color:var(--st)}
+.gate-acts{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+.gate-acts .btn{padding:10px 18px;font-size:.98rem}
+.gate .btn.primary:disabled{opacity:.5}
+#termsAccepted{margin-top:4px}
+</style>
+<script id="kz-gate-js">
+/* ---------- first-use terms gate: bump TERMS_VERSION to make everyone accept again ---------- */
+(function(){
+  const TERMS_VERSION='2026-10-28', KEY='kaizen-workbench-terms';
+  const g=document.getElementById('gateDlg'); if(!g||typeof g.showModal!=='function')return;
+  const ack=document.getElementById('gateAck'), go=document.getElementById('gateGo');
+  const main=document.getElementById('gateMain'), no=document.getElementById('gateDeclined');
+  let session=null, accepted=false;
+  function stored(){try{const v=JSON.parse(localStorage.getItem(KEY)||'null');return v&&v.version===TERMS_VERSION&&v.acceptedAt?v:null}catch(e){return null}}
+  function fmt(iso,l){try{return new Date(iso).toLocaleDateString(l,{year:'numeric',month:'long',day:'numeric'})}catch(e){return String(iso).slice(0,10)}}
+  function showAccepted(){const el=document.getElementById('termsAccepted');if(!el)return;const a=stored()||session;
+    if(!a){el.hidden=true;return}
+    el.querySelector('[data-lang="en"]').textContent='You accepted these terms on '+fmt(a.acceptedAt,'en')+'.';
+    el.querySelector('[data-lang="es"]').textContent='Aceptaste estos términos el '+fmt(a.acceptedAt,'es')+'.';
+    el.hidden=false}
+  function focusables(){return [...g.querySelectorAll('button,input,[tabindex]:not([tabindex="-1"]),a[href]')].filter(x=>!x.disabled&&x.offsetParent!==null)}
+  function open(){if(accepted)return;if(!g.open)g.showModal();(main.hidden?document.getElementById('gateNoTitle'):document.getElementById('gateTitle')).focus()}
+  g.addEventListener('cancel',e=>e.preventDefault());
+  g.addEventListener('close',()=>{if(!accepted)setTimeout(open,0)});
+  g.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();return}
+    if(e.key!=='Tab')return;const f=focusables();if(!f.length)return;const first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&(document.activeElement===first||!g.contains(document.activeElement))){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});
+  ack.addEventListener('change',()=>{go.disabled=!ack.checked});
+  g.addEventListener('click',e=>{const b=e.target.closest('[data-gate]');if(!b)return;const a=b.dataset.gate;
+    if(a==='accept'){if(!ack.checked)return;const rec={version:TERMS_VERSION,acceptedAt:new Date().toISOString()};session=rec;
+      try{localStorage.setItem(KEY,JSON.stringify(rec))}catch(err){}
+      accepted=true;g.close();showAccepted()}
+    else if(a==='decline'){main.hidden=true;no.hidden=false;document.getElementById('gateNoTitle').focus()}
+    else if(a==='review'){no.hidden=true;main.hidden=false;document.getElementById('gateTitle').focus()}});
+  showAccepted();
+  if(stored())accepted=true; else open();
+})();
+</script>
 </body></html>
 </body>
 </html>

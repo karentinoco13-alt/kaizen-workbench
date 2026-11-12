@@ -51,7 +51,7 @@ The whole app works in English and Spanish. Use the **EN | ES** switch in the he
 
 ## Privacy
 
-Your projects never leave your browser. There is no account, no server and no tracking. Work saves automatically in the browser's local storage on your computer. Use **Back up** to save a copy as a file and **Restore** to load it elsewhere. The **Privacy** tab in the app explains this in full.
+Your projects never leave your browser. There is no account, no server and no tracking of individuals; visits are counted anonymously with GoatCounter. Work saves automatically in the browser's local storage on your computer. Use **Back up** to save a copy as a file and **Restore** to load it elsewhere. The **Privacy** tab in the app explains this in full.
 
 ## Terms, deleting data and feedback
 

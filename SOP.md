@@ -228,7 +228,7 @@ Work through the stages in order. Each stage has a green dot in the stage list w
 
 ## 7. Privacy and appropriate use
 
-- Projects never leave the browser. There is no account, no server and no tracking.
+- Projects never leave the browser. There is no account, no server and no tracking of individuals; visits are counted anonymously with GoatCounter.
 - Clearing browser data deletes projects, so keep backups.
 - Full details are under **Privacy** at the top of the app.
 

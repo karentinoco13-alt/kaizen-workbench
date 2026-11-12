@@ -228,7 +228,7 @@ Avanza por las etapas en orden. Cada etapa muestra un punto verde en la lista de
 
 ## 7. Privacidad y uso apropiado
 
-- Los proyectos nunca salen del navegador. No hay cuenta, ni servidor, ni rastreo.
+- Los proyectos nunca salen del navegador. No hay cuenta, ni servidor, ni rastreo de personas; las visitas se cuentan de forma anónima con GoatCounter.
 - Si borras los datos del navegador se borran los proyectos, así que guarda respaldos.
 - Todos los detalles están en **Privacidad**, en la parte superior de la app.
 
